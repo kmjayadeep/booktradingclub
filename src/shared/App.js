@@ -1,73 +1,18 @@
 import React, { Component } from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Container,
-  Row,
-  Col,
-  Jumbotron,
-  Button
-} from "reactstrap";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import { Route } from "react-router-dom";
 
-import './bootstrap.flatly.css';
+import "./bootstrap.flatly.css";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
   render() {
     return (
       <div>
-        <Navbar color="inverse" light expand="md">
-          <NavbarBrand href="/">BookTradingClub</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/signup/">Signup</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/">
-                  Github
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-        <Jumbotron>
-          <Container>
-            <Row>
-              <Col>
-                <h1>Welcome to BookTradingClub</h1>
-                <p>
-                  <Button
-                    tag="a"
-                    color="success"
-                    size="large"
-                    href="http://reactstrap.github.io"
-                    target="_blank"
-                  >
-                    View Reactstrap Docs
-                  </Button>
-                </p>
-              </Col>
-            </Row>
-          </Container>
-        </Jumbotron>
+        <Route exact path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
       </div>
     );
   }

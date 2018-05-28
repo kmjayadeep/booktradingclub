@@ -1,5 +1,11 @@
 import React from "react";
 import { hydrate } from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "../shared/App";
 
-hydrate(<App />, document.getElementById("app-root"));
+hydrate(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById("app-root")
+);
