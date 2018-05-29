@@ -16,7 +16,7 @@ app.use("*", (req, res, next) => {
   }
   let context = {};
   const markup = renderToString(
-    <StaticRouter location={req.url} context={context}>
+    <StaticRouter location={req.originalUrl} context={context}>
       <App/>
     </StaticRouter>
   );
