@@ -5,7 +5,7 @@ import SignUp from "./components/SignUp";
 import { Route } from "react-router-dom";
 import Topbar from "./components/TopBar";
 
-import "./bootstrap.flatly.css";
+import './App.css';
 
 class App extends Component {
   render() {
