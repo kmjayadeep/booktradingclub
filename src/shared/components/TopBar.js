@@ -6,24 +6,48 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
+import { withStyles } from "@material-ui/core/styles";
 
+const styles = {
+  root: {
+    flex: 1
+  },
+  flex: {
+    flex: 1
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20
+  }
+};
 
 class TopBar extends Component {
   render() {
-    return <AppBar position="static">
-        <Toolbar>
-          <IconButton color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="title" color="inherit">
-            BookSharingAppp
-          </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Signup</Button>
-        </Toolbar>
-      </AppBar>;
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="Menu"
+              className={classes.menuButton}
+              component={Link}
+              to="/"
+            >
+              <HomeIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              BookSharingApp
+            </Typography>
+            <Button color="inherit" to="/login" component={Link}>Login</Button>
+            <Button color="inherit" to="/signup" component={Link}>Signup</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
   }
 }
 
-export default TopBar;
+export default withStyles(styles)(TopBar);

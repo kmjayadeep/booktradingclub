@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development webpack -w --mode development & NODE_ENV=development nodemon server.js"
+    "dev": "NODE_ENV=development webpack -w --mode development & NODE_ENV=development nodemon server.js",
+    "server": "NODE_ENV=development nodemon server.js",
+    "webpack": "NODE_ENV=development webpack -w --mode development"
   },
   "keywords": [],
   "author": "",
