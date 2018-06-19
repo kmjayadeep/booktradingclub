@@ -1,23 +1,33 @@
 import express from "express";
 import React from "react";
 import { renderToString } from "react-dom/server";
-import {StaticRouter} from "react-router-dom";
+import { StaticRouter } from "react-router-dom";
 import serialize from "serialize-javascript";
-
+import Controllers from "./controllers";
+import mongoose from "mongoose";
 import App from "../shared/App";
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 
+mongoose.connect("mongodb://localhost/booksharingapp").then(
+  () => {
+    console.log("Mongodb connected");
+  },
+  err => {
+    console.error("Mongodb error :", err);
+  }
+);
+
+
 app.use(express.static("public"));
+app.use("/api", Controllers);
 
 app.use("*", (req, res, next) => {
-  const initialData = {
-    name: 'World'
-  }
   let context = {};
   const markup = renderToString(
     <StaticRouter location={req.originalUrl} context={context}>
-      <App/>
+      <App />
     </StaticRouter>
   );
   res.send(`
@@ -32,8 +42,8 @@ app.use("*", (req, res, next) => {
         </body>
     </html>
   `);
-})
+});
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("server is listening");
-})
+app.listen(PORT, () => {
+  console.log("Server is listening at :", PORT);
+});
