@@ -28,7 +28,7 @@ class LoginForm extends Component {
               <Icon>person</Icon>
             </Grid>
             <Grid item>
-              <TextField id="input-with-icon-grid" label="Username" />
+              <TextField label="Username" />
             </Grid>
           </Grid>
           <Grid container spacing={8} alignItems="flex-end">
@@ -36,10 +36,10 @@ class LoginForm extends Component {
               <Icon>lock</Icon>
             </Grid>
             <Grid item>
-              <TextField id="input-with-icon-grid" type="password" label="Password" />
+              <TextField type="password" label="Password" />
             </Grid>
           </Grid>
-          <Grid container justify="center" className={classes.signupButton} spacing={12}>
+          <Grid container justify="center" className={classes.signupButton} spacing={16}>
             <Button variant="outlined" color="primary">
               Login
             </Button>
