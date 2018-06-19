@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+import Home from "./containers/Home";
+import Login from "./containers/Login";
+import SignUp from "./containers/Signup";
 import { Route } from "react-router-dom";
 import Topbar from "./components/TopBar";
 import CssBaseline from "@material-ui/core/CssBaseline";

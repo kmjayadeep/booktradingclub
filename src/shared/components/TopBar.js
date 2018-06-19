@@ -11,7 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    flex: 1
+    height:64
   },
   flex: {
     flex: 1
@@ -27,7 +27,7 @@ class TopBar extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton
               color="inherit"
