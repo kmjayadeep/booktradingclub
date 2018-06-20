@@ -10,15 +10,15 @@ var schema = new Schema({
       unique: true
     }
   },
-  password: {
-    type: String,
-    required: true
-  },
+  password: String,
   passwordSalt: String,
   city: String,
   address: String,
   state: String,
-  contact: String //Phone/email/Where to find you?
+  contact: String, //Phone/email/Where to find you?
+  google:{
+    profile: Schema.Types.Mixed
+  }
 });
 
 

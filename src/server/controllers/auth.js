@@ -1,38 +1,43 @@
 import express from "express";
 import User from "../models/User";
 const controller = express.Router();
+import passport from "passport";
 
 controller.post("/login/basic", (req, res) => {
-  User.findOne({
-    email: req.body.email
-  })
-    .then(user => {
-      if (user == null)
-        return res.status(401).json({
-          message: "Invalid email Id"
-        });
-      if (user.comparePassword(req.body.password)) {
-        const { name, email, city, address, state, contact } = user;
-        return res.json({
-          name,
-          email,
-          city,
-          address,
-          state,
-          contact
-        });
+  passport.authenticate("local", { session: false }, (err, token, user) => {
+    if (err || !token) {
+      return res.status(401).json(err);
+    }
+    res.json({ token, user });
+  })(req, res);
+});
+
+controller.get("/login/google", (req, res) => {
+  passport.authenticate(
+    "google",
+    {
+      session: false,
+      scope: [
+        "https://www.googleapis.com/auth/plus.login",
+        "https://www.googleapis.com/auth/plus.profile.emails.read"
+      ]
+    },
+    (err, token, user) => {
+      if (err || !token) {
+        return res.status(401).json(err);
       }
-      return res.status(401).json({
-        message: "Invalid Password"
-      });
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(400).json({
-        message: "Unable to Login",
-        error: err
-      });
-    });
+      res.json({ token, user });
+    }
+  )(req, res);
+});
+
+controller.get("/login/google/callback", (req, res) => {
+  passport.authenticate("google", { session: false }, (err, token, user) => {
+    if (err || !token) {
+      return res.status(401).json(err);
+    }
+    res.json({ token, user });
+  })(req, res);
 });
 
 controller.put("/signup", (req, res) => {
@@ -40,7 +45,7 @@ controller.put("/signup", (req, res) => {
   user
     .save()
     .then(savedUser => {
-      const { name, email} = savedUser;
+      const { name, email } = savedUser;
       return res.json({
         name,
         email
