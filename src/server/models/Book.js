@@ -1,14 +1,17 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
-var schema = Schema({
+var schema = new Schema({
   title: {
-      type:String,
-      required: true
+    type: String,
+    required: true
   },
   author: String,
-  owner: Schema.Types.ObjectId
-}); 
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
+});
 
-var Book = mongoose.model('Book', schema);
+var Book = mongoose.model("Book", schema);
 
 export default Book;

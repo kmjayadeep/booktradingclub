@@ -3,8 +3,9 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import serialize from "serialize-javascript";
-import Controllers from "./controllers";
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import Controllers from "./controllers";
 import App from "../shared/App";
 
 const PORT = process.env.PORT || 3000;
@@ -19,7 +20,7 @@ mongoose.connect("mongodb://localhost/booksharingapp").then(
   }
 );
 
-
+app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use("/api", Controllers);
 
