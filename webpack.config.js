@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var nodeExternals = require('webpack-node-externals');
 
 const BrowserConfig = {
   entry: "./src/browser/index.js",
@@ -44,6 +45,7 @@ const BrowserConfig = {
 const ServerConfig = {
   entry: "./src/server/index.js",
   target: "node",
+  externals: [nodeExternals()],
   output: {
     path: __dirname,
     filename: "server.js",
