@@ -1,3 +1,0 @@
-*** Prequisites
-
-node-gyp global

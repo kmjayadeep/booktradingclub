@@ -7,11 +7,12 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import Controllers from "./controllers";
 import App from "../shared/App";
+import config from './config/config';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-mongoose.connect("mongodb://localhost/booksharingapp").then(
+mongoose.connect(config.dbUrl).then(
   () => {
     console.log("Mongodb connected");
   },
