@@ -37,15 +37,10 @@ export default new GoogleStrategy(
         } else return Promise.resolve(user);
       })
       .then(user => {
-        const payload = {
-          userId: user._id
-        };
+        const { _id, name, email, city, address, state, contact } = user;
 
-        // create a token string
-        const token = jwt.sign(payload, config.jwtSecret);
-        const { name, email, city, address, state, contact } = user;
-
-        return done(null, token, {
+        return done(null, {
+          _id,
           name,
           email,
           city,
@@ -55,9 +50,9 @@ export default new GoogleStrategy(
         });
       })
       .catch(err => {
-        console.log(err);
         done({
-          message: "Unable to login"
+          message: "Unable to login",
+          error: err
         });
       });
   }

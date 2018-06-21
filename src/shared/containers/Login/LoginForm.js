@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 const styles = (theme)=>({
   loginForm: {
@@ -43,7 +44,7 @@ class LoginForm extends Component {
             <Button variant="outlined" color="primary">
               Login
             </Button>
-            <Button variant="outlined" color="secondary">
+            <Button variant="outlined" color="secondary" to="/signup" component={Link}>
               Signup
             </Button>
           </Grid>
