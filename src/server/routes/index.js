@@ -1,17 +1,17 @@
 import express from 'express';
-import BookController from "./book";
-import AuthController from "./auth";
-import UserController from "./user";
+import BookRouter from "./book";
+import AuthRouter from "./auth";
+import UserRouter from "./user";
 
 
-const controller = express.Router();
+const router = express.Router();
 
-controller.use("/auth", AuthController);
-controller.use("/book", BookController);
-controller.use('/user',UserController)
+router.use("/auth", AuthRouter);
+router.use("/book", BookRouter);
+router.use('/user',UserRouter);
 
-controller.get('/',(req,res)=>{
+router.get('/',(req,res)=>{
     res.send('BookSharing Api v1.0');
 })
 
-export default controller;
+export default router;

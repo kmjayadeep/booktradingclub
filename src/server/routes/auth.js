@@ -1,6 +1,6 @@
 import express from "express";
 import User from "../models/User";
-const controller = express.Router();
+const router = express.Router();
 import {
   loginBasic,
   loginGoogle,
@@ -10,7 +10,7 @@ import {
 
 import ErrorCodes from "../helpers/errorCodes";
 
-controller.post("/login/basic", (req, res) => {
+router.post("/login/basic", (req, res) => {
   const { email, password } = req.body;
   loginBasic({ email, password })
     .then(result => {
@@ -24,9 +24,9 @@ controller.post("/login/basic", (req, res) => {
     });
 });
 
-controller.get("/login/google", loginGoogle);
+router.get("/login/google", loginGoogle);
 
-controller.get("/login/google/callback", (req, res) => {
+router.get("/login/google/callback", (req, res) => {
   loginGoogleCallback(req)
     .then(result => {
       res.json(result);
@@ -39,7 +39,7 @@ controller.get("/login/google/callback", (req, res) => {
     });
 });
 
-controller.put("/signup", (req, res) => {
+router.put("/signup", (req, res) => {
   signupBasic(req.body)
     .then(result => {
       return res.json(result);
@@ -63,4 +63,4 @@ const formatErrorMessage =  error => {
   return error;
 };
 
-export default controller;
+export default router;

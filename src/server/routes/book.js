@@ -1,23 +1,46 @@
 import express from "express";
-import Book from "../models/Book";
-const controller = express.Router();
+import { getAllBooks, addBook,deleteBook } from "../controllers/BookController";
+const router = express.Router();
 
-controller.get('/', (req, res) => {
-  Book.find().then(books => {
-    res.json(books);
-  });
-});
-
-controller.put('/', (req, res) => {
-  const book = new Book(req.body);
-  book.save().then(b => {
-    res.json(b);
-  }).catch(err=>{
-    res.status(400).json({
-      message: "Unable to save Book",
-      error: err
+router.get("/", (req, res) => {
+  getAllBooks()
+    .then(books => {
+      res.json(books);
     })
-  })
+    .catch(err => {
+      res.status(400).json({
+        message: "Unable to retrieve Books",
+        error: err
+      });
+    });
 });
 
-export default controller;
+router.put("/", (req, res) => {
+  const { body, user } = req;
+  addBook(body, user)
+    .then(book => {
+      res.json(book);
+    })
+    .catch(err => {
+      res.status(400).json({
+        message: "Unable to save Book",
+        error: err
+      });
+    });
+});
+
+router.delete("/:bookId", (req, res) => {
+  const {bookId} = req.params;
+  deleteBook(bookId)
+    .then(result => {
+      res.json(result);
+    })
+    .catch(err => {
+      res.status(400).json({
+        message: "Unable to delete Book",
+        error: err
+      });
+    });
+});
+
+export default router;
