@@ -2,7 +2,10 @@ import mongoose, { Schema } from "mongoose";
 import {sha512, generateSalt} from "../helpers/cryptoHelper";
 
 var schema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,

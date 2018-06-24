@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import passport from 'passport';
 import morgan from 'morgan';
-import Controllers from "./controllers";
+import Routes from "./routes";
 import App from "../shared/App";
 import config from './config';
 
@@ -33,7 +33,7 @@ import googleStrategy from './helpers/passport/googleStrategy';
 passport.use(localStrategy);
 passport.use(googleStrategy);
 
-app.use("/api", Controllers);
+app.use("/api", Routes);
 
 app.use("*", (req, res, next) => {
   let context = {};
