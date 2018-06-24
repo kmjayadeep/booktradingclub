@@ -3,7 +3,6 @@ import Book from "../models/Book";
 const controller = express.Router();
 
 controller.get('/', (req, res) => {
-  console.log(req.user)
   Book.find().then(books => {
     res.json(books);
   });

@@ -5,29 +5,19 @@ import { StaticRouter } from "react-router-dom";
 import serialize from "serialize-javascript";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import passport from "passport";
-import morgan from "morgan";
-import session from "express-session";
+import passport from 'passport';
+import morgan from 'morgan';
 import Controllers from "./controllers";
 import App from "../shared/App";
-import config from "./config";
-import passportHelper from "./helpers/passport";
+import config from './config';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.json());
-app.use(
-  session({
-    secret: config.sessionSecret,
-    resave: false,
-    saveUninitialized: true
-  })
-);
 app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static("public"));
-app.use(morgan("tiny"));
+app.use(morgan('tiny'));
 
 mongoose.connect(config.dbUrl).then(
   () => {
@@ -38,7 +28,10 @@ mongoose.connect(config.dbUrl).then(
   }
 );
 
-passportHelper(passport);
+import localStrategy from './helpers/passport/localStrategy';
+import googleStrategy from './helpers/passport/googleStrategy';
+passport.use(localStrategy);
+passport.use(googleStrategy);
 
 app.use("/api", Controllers);
 

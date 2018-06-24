@@ -5,7 +5,6 @@ const env = process.env;
 
 const config = {
     development: {
-        sessionSecret: env.SESSION_SECRET || 'secretsession',
         dbUrl: env.DB_URL,
         jwtSecret: env.JWT_SECRET || 'thisisasecret',
         google:{
@@ -14,7 +13,6 @@ const config = {
         }
     },
     production: {
-        sessionSecret: env.SESSION_SECRET,
         dbUrl: env.DB_URL,
         jwtSecret: env.JWT_SECRET,
         google:{

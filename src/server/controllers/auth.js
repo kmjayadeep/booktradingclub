@@ -4,31 +4,41 @@ const controller = express.Router();
 import passport from "passport";
 
 controller.post("/login/basic", (req, res) => {
-  passport.authenticate("local", (err, user) => {
-    if (err || !user) {
+  passport.authenticate("local", { session: false }, (err, token, user) => {
+    if (err || !token) {
       return res.status(401).json(err);
     }
-    res.json(user);
+    res.json({ token, user });
   })(req, res);
 });
 
-controller.get(
-  "/login/google",
-  passport.authenticate("google", {
-    scope: [
-      "https://www.googleapis.com/auth/plus.login",
-      "https://www.googleapis.com/auth/plus.profile.emails.read"
-    ]
-  })
-);
+controller.get("/login/google", (req, res) => {
+  passport.authenticate(
+    "google",
+    {
+      session: false,
+      scope: [
+        "https://www.googleapis.com/auth/plus.login",
+        "https://www.googleapis.com/auth/plus.profile.emails.read"
+      ]
+    },
+    (err, token, user) => {
+      if (err || !token) {
+        return res.status(401).json(err);
+      }
+      res.json({ token, user });
+    }
+  )(req, res);
+});
 
-controller.get(
-  "/login/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/",
-    failureRedirect: "/login"
-  })
-);
+controller.get("/login/google/callback", (req, res) => {
+  passport.authenticate("google", { session: false }, (err, token, user) => {
+    if (err || !token) {
+      return res.status(401).json(err);
+    }
+    res.json({ token, user });
+  })(req, res);
+});
 
 controller.put("/signup", (req, res) => {
   const user = new User(req.body);
