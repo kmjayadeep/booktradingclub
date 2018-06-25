@@ -5,15 +5,18 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 
 import { signInUser } from "../../redux/actions/actions";
 
 const mapStateToProps = state => {
   return {
-    user: state.authUser.user
+    errorMessage: state.authUser.errorMessage,
+    isAuth: state.authUser.isAuth,
+    isError: state.authUser.isError
   };
 };
-
 
 const styles = theme => ({
   loginForm: {
@@ -25,6 +28,17 @@ const styles = theme => ({
   },
   signupButton: {
     marginTop: 30
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  snackbarIcon:{
+    opacity: 0.9,
+    marginRight: theme.spacing.unit,
   }
 });
 
@@ -54,7 +68,7 @@ class LoginForm extends Component {
               <TextField
                 type="email"
                 label="Email"
-                onChange={(event) => this.setState({email:event.target.value})}
+                onChange={event => this.setState({ email: event.target.value })}
               />
             </Grid>
           </Grid>
@@ -66,7 +80,8 @@ class LoginForm extends Component {
               <TextField
                 type="password"
                 label="Password"
-                onChange={(event) => this.setState({password:event.target.value})}
+                onChange={event =>
+                  this.setState({ password: event.target.value })}
               />
             </Grid>
           </Grid>
@@ -88,6 +103,19 @@ class LoginForm extends Component {
             </Button>
           </Grid>
         </Grid>
+
+        <Snackbar open={this.props.isError}>
+          <SnackbarContent
+            className={classes.error}
+            aria-describedby="client-snackbar"
+            message={
+              <span className={classes.message}>
+                <Icon className={classes.snackbarIcon}>error</Icon>
+                {this.props.errorMessage}
+              </span>
+            }
+          />
+        </Snackbar>
       </Grid>
     );
   }

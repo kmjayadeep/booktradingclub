@@ -1,5 +1,11 @@
 import axios from "axios";
-import { LOAD_BOOKS, VIEW_BOOK, LOGIN } from "../actionTypes";
+import {
+  LOAD_BOOKS,
+  VIEW_BOOK,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGIN_ERROR_HIDE
+} from "../actionTypes";
 const url = "api/";
 
 export function loadBooks() {
@@ -36,8 +42,15 @@ export function signInUser(credentials) {
         let { token, user } = res.data;
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        dispatch({ type: LOGIN, user });
+        dispatch({ type: LOGIN_SUCCESS, token, user });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        const message = err.response.data.message;
+        dispatch({ type: LOGIN_ERROR, message });
+        //to hide error message after 3s
+        setTimeout(() => {
+          dispatch({ type: LOGIN_ERROR_HIDE });
+        }, 3000);
+      });
   };
 }

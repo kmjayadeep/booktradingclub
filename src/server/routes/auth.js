@@ -18,7 +18,7 @@ router.post("/login/basic", (req, res) => {
     })
     .catch(err => {
       res.status(401).json({
-        message: "Invalid email or password",
+        message: "Invalid Email or Password",
         errror: err
       });
     });
