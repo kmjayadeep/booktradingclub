@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,6 +10,14 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 
+import { loadBooks } from "../../redux/actions/actions";
+
+const mapStateToProps = state => {
+  return {
+    books: state.book.books
+  };
+};
+
 const styles = {
   books: {
     marginTop: 10,
@@ -17,16 +26,19 @@ const styles = {
 };
 
 class Books extends Component {
+  componentWillMount() {
+    this.props.loadBooks();
+  }
   render() {
-    const { classes } = this.props;
+    const { classes, books } = this.props;
     return (
       <Grid container spacing={24} className={classes.books}>
-        {[1, 2, 3, 4, 5].map((i) => (
-          <Grid key={i} item xs={12} sm={6} md={4} xl={3}>
+        {books.map(book => (
+          <Grid key={book._id} item xs={12} sm={6} md={4} xl={3}>
             <Card>
               <CardHeader
-                title="Murder on the Orient Express"
-                subheader="Agatha Christie"
+                title={book.title}
+                subheader={book.author}
               />
               <CardContent>
                 <Grid container>
@@ -54,4 +66,5 @@ class Books extends Component {
   }
 }
 
-export default withStyles(styles)(Books);
+const ConnectedComponent = connect(mapStateToProps, { loadBooks })(Books);
+export default withStyles(styles)(ConnectedComponent);

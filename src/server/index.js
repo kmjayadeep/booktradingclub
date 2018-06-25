@@ -5,12 +5,14 @@ import { StaticRouter } from "react-router-dom";
 import serialize from "serialize-javascript";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import passport from 'passport';
-import morgan from 'morgan';
-import helmet from 'helmet';
+import passport from "passport";
+import morgan from "morgan";
+import helmet from "helmet";
+import { Provider } from "react-redux";
+import { store } from "../shared/redux/store";
 import Routes from "./routes";
 import App from "../shared/App";
-import config from './config';
+import config from "./config";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -19,7 +21,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(express.static("public"));
-app.use(morgan('tiny'));
+app.use(morgan("tiny"));
 
 mongoose.connect(config.dbUrl).then(
   () => {
@@ -30,8 +32,8 @@ mongoose.connect(config.dbUrl).then(
   }
 );
 
-import localStrategy from './helpers/passport/localStrategy';
-import googleStrategy from './helpers/passport/googleStrategy';
+import localStrategy from "./helpers/passport/localStrategy";
+import googleStrategy from "./helpers/passport/googleStrategy";
 passport.use(localStrategy);
 passport.use(googleStrategy);
 
@@ -40,9 +42,11 @@ app.use("/api", Routes);
 app.use("*", (req, res, next) => {
   let context = {};
   const markup = renderToString(
-    <StaticRouter location={req.originalUrl} context={context}>
-      <App />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.originalUrl} context={context}>
+        <App />
+      </StaticRouter>
+    </Provider>
   );
   res.send(`
     <html>
