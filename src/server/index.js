@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import passport from 'passport';
 import morgan from 'morgan';
+import helmet from 'helmet';
 import Routes from "./routes";
 import App from "../shared/App";
 import config from './config';
@@ -14,6 +15,7 @@ import config from './config';
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(express.static("public"));
