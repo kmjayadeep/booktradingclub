@@ -44,10 +44,13 @@ exports.signupBasic = body => {
     email,
     password
   });
-  return user.save().then(savedUser=>{
-    const {name,email} = savedUser;
-    return {name,email};
-  }).catch(err=>{
-    throw moongooseErrorFormatter(err)
-  })
+  return user
+    .save()
+    .then(savedUser => {
+      const { name, email } = savedUser;
+      return { name, email };
+    })
+    .catch(err => {
+      throw moongooseErrorFormatter(err);
+    });
 };

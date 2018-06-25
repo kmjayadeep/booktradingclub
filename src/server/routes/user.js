@@ -1,17 +1,16 @@
 import express from "express";
-import User from "../models/User";
-const controller = express.Router();
+import {getAllUsers,editUser} from "../controllers/UserController";
+const router = express.Router();
 
-controller.get('/', (req, res) => {
-  User.find().then(users => {
+router.get('/', (req, res) => {
+  getAllUsers().then(users => {
     res.json(users);
   });
 });
 
-controller.put('/', (req, res) => {
-  const User = new User(req.body);
-  User.save().then(b => {
-    res.json(b);
+router.put('/', (req, res) => {
+  editUser(req.body).then(user => {
+    res.json(user);
   }).catch(err=>{
     res.status(400).json({
       message: "Unable to save User",
@@ -20,4 +19,4 @@ controller.put('/', (req, res) => {
   })
 });
 
-export default controller;
+export default router;
