@@ -8,13 +8,12 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 
-import { signInUser } from "../../redux/actions/actions";
+import { setUser } from "../../redux/actions/actions";
+import { login } from "../../api/auth";
 
 const mapStateToProps = state => {
   return {
-    errorMessage: state.authUser.errorMessage,
-    isAuth: state.authUser.isAuth,
-    isError: state.authUser.isError
+    isAuth: state.authUser.isAuth
   };
 };
 
@@ -33,12 +32,12 @@ const styles = theme => ({
     backgroundColor: theme.palette.error.dark
   },
   message: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center"
   },
-  snackbarIcon:{
+  snackbarIcon: {
     opacity: 0.9,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   }
 });
 
@@ -47,13 +46,29 @@ class LoginForm extends Component {
     super();
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isError: false,
+      errorMessage: ""
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
   handleLogin() {
     const credentials = this.state;
-    this.props.signInUser(credentials);
+    login(credentials)
+      .then(({ token, user }) => {
+        this.props.setUser(token, user);
+      })
+      .catch(err => {
+        this.setState({
+          isError: true,
+          errorMessage: err.message
+        });
+        setTimeout(() => {
+          this.setState({
+            isError: false
+          });
+        },3000);
+      });
   }
   render() {
     const { classes } = this.props;
@@ -104,14 +119,14 @@ class LoginForm extends Component {
           </Grid>
         </Grid>
 
-        <Snackbar open={this.props.isError}>
+        <Snackbar open={this.state.isError}>
           <SnackbarContent
             className={classes.error}
             aria-describedby="client-snackbar"
             message={
               <span className={classes.message}>
                 <Icon className={classes.snackbarIcon}>error</Icon>
-                {this.props.errorMessage}
+                {this.state.errorMessage}
               </span>
             }
           />
@@ -121,5 +136,5 @@ class LoginForm extends Component {
   }
 }
 
-const ConnectedComponent = connect(mapStateToProps, { signInUser })(LoginForm);
+const ConnectedComponent = connect(mapStateToProps, { setUser })(LoginForm);
 export default withStyles(styles)(ConnectedComponent);

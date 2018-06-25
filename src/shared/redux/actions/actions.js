@@ -1,12 +1,6 @@
 import axios from "axios";
-import {
-  LOAD_BOOKS,
-  VIEW_BOOK,
-  LOGIN_SUCCESS,
-  LOGIN_ERROR,
-  LOGIN_ERROR_HIDE
-} from "../actionTypes";
-const url = "api/";
+import { LOAD_BOOKS, VIEW_BOOK, SET_USER, LOGOUT } from "../actionTypes";
+const url = "/api/";
 
 export function loadBooks() {
   return dispatch => {
@@ -34,23 +28,18 @@ export function getBook(bookId) {
   };
 }
 
-export function signInUser(credentials) {
-  return dispatch => {
-    axios
-      .post(`${url}auth/login/basic`, credentials)
-      .then(res => {
-        let { token, user } = res.data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-        dispatch({ type: LOGIN_SUCCESS, token, user });
-      })
-      .catch(err => {
-        const message = err.response.data.message;
-        dispatch({ type: LOGIN_ERROR, message });
-        //to hide error message after 3s
-        setTimeout(() => {
-          dispatch({ type: LOGIN_ERROR_HIDE });
-        }, 3000);
-      });
+export function setUser(token, user) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
+  return {
+    type: SET_USER,
+    token,
+    user
+  };
+}
+
+export function logout() {
+  return {
+    type: LOGOUT
   };
 }

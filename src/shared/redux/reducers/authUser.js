@@ -1,39 +1,22 @@
 import {
-  LOGIN_SUCCESS,
-  LOGIN_ERROR,
-  LOGIN_ERROR_HIDE,
+  SET_USER,
   LOGOUT
 } from "../actionTypes";
 
 const initialState = {
   isAuth: false,
   user: {},
-  token: null,
-  errorMessage: "",
-  isError: false
+  token: null
 };
+
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_SUCCESS:
+    case SET_USER:
       return {
         ...state,
         isAuth: true,
         token: action.token,
-        user: action.user,
-        isError: false
-      };
-      break;
-    case LOGIN_ERROR:
-      return {
-        ...state,
-        isError: true,
-        errorMessage: action.message
-      };
-      break;
-    case LOGIN_ERROR_HIDE:
-      return {
-        ...state,
-        isError: false
+        user: action.user
       };
       break;
     case LOGOUT:
@@ -41,8 +24,7 @@ export default (state = initialState, action) => {
         ...state,
         isAuth: false,
         token: null,
-        user: {},
-        isError: false
+        user: {}
       };
     default:
       return state;
