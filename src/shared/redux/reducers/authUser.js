@@ -1,20 +1,23 @@
+import { LOGIN, LOGOUT } from "../actionTypes";
+
 const initialState = {
-  user: {},
   isAuth: false,
-  profile: {}
+  user: {}
 };
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "SET_USER":
+    case LOGIN:
       return {
         ...state,
-        isAuth: Object.keys(action.user).length > 0 ? true : false,
+        isAuth: true,
         user: action.user
       };
-    case "SET_PROFILE":
+      break;
+    case LOGOUT:
       return {
         ...state,
-        profile: action.profile
+        isAuth: false,
+        user: {}
       };
     default:
       return state;

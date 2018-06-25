@@ -1,14 +1,21 @@
+import {SHOW_SPINNER,HIDE_SPINNER} from '../actionTypes';
+
 const defaultState = {
-  appName: "",
-  modalMode: false
+  showSpinner: false
 };
+
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case "TOGGLE_MODAL":
+    case SHOW_SPINNER:
       return {
-        ...defaultState,
-        modalMode: action.modalMode
-      };
+        ...state,
+        showSpinner:true
+      }
+    case HIDE_SPINNER:
+      return {
+        ...state,
+        showSpinner:false
+      }
     default:
       return state;
   }
