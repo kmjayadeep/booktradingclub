@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Redirect} from 'react-router';
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -52,6 +53,11 @@ class LoginForm extends Component {
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
+
+  componentDidUpdate(){
+    console.log(this.props.isAuth)
+  }
+
   handleLogin() {
     const credentials = this.state;
     login(credentials)
@@ -71,18 +77,23 @@ class LoginForm extends Component {
       });
   }
   render() {
+    if (this.props.isAuth) {
+      return <Redirect to='/' />;
+    }
     const { classes } = this.props;
     return (
       <Grid container className={classes.loginForm} justify="center">
         <Grid item className={classes.margin}>
           <Grid container spacing={8} alignItems="flex-end">
             <Grid item>
-              <Icon>person</Icon>
+              <Icon>email</Icon>
             </Grid>
             <Grid item>
               <TextField
+                required
                 type="email"
                 label="Email"
+                error={this.state.isError}
                 onChange={event => this.setState({ email: event.target.value })}
               />
             </Grid>
@@ -93,8 +104,10 @@ class LoginForm extends Component {
             </Grid>
             <Grid item>
               <TextField
+                required
                 type="password"
                 label="Password"
+                error={this.state.isError}
                 onChange={event =>
                   this.setState({ password: event.target.value })}
               />
