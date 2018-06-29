@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import morgan from "morgan";
 import helmet from "helmet";
-import { configureStore } from "../shared/redux/store";
+import { configureStore } from "./store";
 import Routes from "./routes";
 import config from "./config";
 import { renderMarkup, renderHtml } from './render';
