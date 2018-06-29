@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 
-import { loginUser } from "../../redux/actions/actions";
+import { loginUser } from "../../redux/actions/auth";
 
 const mapStateToProps = state => {
   return state.authUser

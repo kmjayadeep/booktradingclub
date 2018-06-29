@@ -1,33 +1,6 @@
-import axios from "axios";
-import { LOAD_BOOKS, VIEW_BOOK, LOGIN_REQUEST, LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_RESET } from "../actionTypes";
+import {LOGIN_REQUEST, LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_RESET } from "../actionTypes";
 const url = "/api/";
 import { login } from '../../api/auth';
-
-export function loadBooks() {
-  return dispatch => {
-    axios
-      .get(`${url}book`)
-      .then(res => {
-        let books = res.data;
-        dispatch({ type: LOAD_BOOKS, books });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-}
-
-export function getBook(bookId) {
-  return dispatch => {
-    axios
-      .get(`${url}book/${bookId}`)
-      .then(res => {
-        let book = res.data;
-        dispatch({ type: VIEW_BOOK, book });
-      })
-      .catch(err => console.log(err));
-  };
-}
 
 export function loginUser(credentials) {
   return dispatch => {

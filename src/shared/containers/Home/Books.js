@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 
-import { loadBooks } from "../../redux/actions/actions";
+import { loadBooks } from "../../redux/actions/book";
 
 const mapStateToProps = state => {
   return {
