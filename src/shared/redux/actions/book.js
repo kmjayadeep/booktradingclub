@@ -1,4 +1,4 @@
-import { LOAD_BOOKS, VIEW_BOOK } from '../actionTypes';
+import { LOAD_BOOKS } from '../actionTypes';
 
 import { getBooks } from '../../api/book';
 

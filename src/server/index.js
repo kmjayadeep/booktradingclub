@@ -1,19 +1,13 @@
 import express from "express";
-import React from "react";
-import { renderToString } from "react-dom/server";
-import { StaticRouter } from "react-router-dom";
-import serialize from "serialize-javascript";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import passport from "passport";
 import morgan from "morgan";
 import helmet from "helmet";
-import searizlize from 'serialize-javascript';
-import { Provider } from "react-redux";
 import { configureStore } from "../shared/redux/store";
 import Routes from "./routes";
-import App from "../shared/App";
 import config from "./config";
+import { renderMarkup, renderHtml } from './render';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -40,39 +34,12 @@ passport.use(googleStrategy);
 
 app.use("/api", Routes);
 
-app.use("*", handleRender);
-
-function handleRender(req,res){
-  let context = {};
+app.use("*", (req, res) => {
   const store = configureStore();
-  const markup = renderToString(
-    <Provider store={store}>
-      <StaticRouter location={req.originalUrl} context={context}>
-        <App />
-      </StaticRouter>
-    </Provider>
-  );
+  const markup = renderMarkup(req.originalUrl, store);
   const preloadedState = store.getState();
-  res.send(renderFullPage(markup, preloadedState));
-}
-
-function renderFullPage(markup,preloadedState){
-  return `
-    <html>
-        <head>
-            <title>BookSharingApp</title>
-            <link rel="stylesheet" href="/css/main.css">
-        </head>
-        <body>
-            <div id="app-root">${markup}</div>
-            <script>
-              window.__PRELOADED_STATE__ = ${serialize(preloadedState)}
-            </script>
-            <script src="/bundle.js"></script>
-        </body>
-    </html>
-  `;
-}
+  res.send(renderHtml(markup, preloadedState));
+});
 
 app.listen(PORT, () => {
   console.log("Server is listening at :", PORT);

@@ -26,8 +26,9 @@ const styles = {
 };
 
 class Books extends Component {
-  componentWillMount() {
-    this.props.loadBooks();
+  componentDidMount() {
+    if(this.props.books.length==0)
+      this.props.loadBooks();
   }
   render() {
     const { classes, books } = this.props;
