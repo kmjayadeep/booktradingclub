@@ -9,13 +9,10 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 
-import { setUser } from "../../redux/actions/actions";
-import { login } from "../../api/auth";
+import { loginUser } from "../../redux/actions/actions";
 
 const mapStateToProps = state => {
-  return {
-    isAuth: state.authUser.isAuth
-  };
+  return state.authUser
 };
 
 const styles = theme => ({
@@ -43,38 +40,18 @@ const styles = theme => ({
 });
 
 class LoginForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      isError: false,
-      errorMessage: ""
-    };
-    this.handleLogin = this.handleLogin.bind(this);
+  state = {
+    email: "",
+    password: "",
   }
-
-  componentDidUpdate(){
-    console.log(this.props.isAuth)
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin() {
     const credentials = this.state;
-    login(credentials)
-      .then(({ token, user }) => {
-        this.props.setUser(token, user);
-      })
-      .catch(err => {
-        this.setState({
-          isError: true,
-          errorMessage: err.message
-        });
-        setTimeout(() => {
-          this.setState({
-            isError: false
-          });
-        },3000);
-      });
+    this.props.loginUser(credentials);
   }
   render() {
     if (this.props.isAuth) {
@@ -93,7 +70,7 @@ class LoginForm extends Component {
                 required
                 type="email"
                 label="Email"
-                error={this.state.isError}
+                error={this.props.loginError!=null}
                 onChange={event => this.setState({ email: event.target.value })}
               />
             </Grid>
@@ -107,7 +84,7 @@ class LoginForm extends Component {
                 required
                 type="password"
                 label="Password"
-                error={this.state.isError}
+                error={this.props.loginError!=null}
                 onChange={event =>
                   this.setState({ password: event.target.value })}
               />
@@ -132,14 +109,14 @@ class LoginForm extends Component {
           </Grid>
         </Grid>
 
-        <Snackbar open={this.state.isError}>
+        <Snackbar open={this.props.loginError!=null}>
           <SnackbarContent
             className={classes.error}
             aria-describedby="client-snackbar"
             message={
               <span className={classes.message}>
                 <Icon className={classes.snackbarIcon}>error</Icon>
-                {this.state.errorMessage}
+                {this.props.loginError}
               </span>
             }
           />
@@ -149,5 +126,5 @@ class LoginForm extends Component {
   }
 }
 
-const ConnectedComponent = connect(mapStateToProps, { setUser })(LoginForm);
+const ConnectedComponent = connect(mapStateToProps, { loginUser })(LoginForm);
 export default withStyles(styles)(ConnectedComponent);

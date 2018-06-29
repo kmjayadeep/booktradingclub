@@ -1,11 +1,6 @@
-import axios from "axios";
-const url = "/api/";
+import request from './request';
 
 export function login(credentials) {
-  return axios
-    .post(`${url}auth/login/basic`, credentials)
-    .then(res => res.data)
-    .catch(err => {
-        throw err.response.data;
-    });
+  return request
+    .post(`auth/login/basic`, credentials)
 }

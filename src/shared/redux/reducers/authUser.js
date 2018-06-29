@@ -1,31 +1,46 @@
 import {
-  SET_USER,
-  LOGOUT
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGIN_RESET
 } from "../actionTypes";
 
 const initialState = {
+  isLoading: false,
   isAuth: false,
-  user: {},
-  token: null
+  user: null,
+  loginError: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_USER:
+    case LOGIN_REQUEST:
+      {
+        return {
+          ...state,
+          isLoading: true,
+          loginError: null
+        }
+      }
+    case LOGIN_SUCCESS:
       return {
         ...state,
+        isLoading: false,
         isAuth: true,
-        token: action.token,
-        user: action.user
+        user: action.user,
+        loginError: null
       };
       break;
-    case LOGOUT:
+    case LOGIN_ERROR:
       return {
         ...state,
+        isLoading: false,
         isAuth: false,
-        token: null,
-        user: {}
+        user: null,
+        loginError: action.message
       };
+    case LOGIN_RESET:
+      return initialState;
     default:
       return state;
   }
