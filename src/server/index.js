@@ -38,16 +38,8 @@ passport.use(googleStrategy);
 app.use(validateAuthHeaders);
 app.use("/api", Routes);
 
-app.use("*", (req, res) => {
-  let initialState = {};
-  if (req.user) {
-    const { name, email } = req.user;
-    initialState.authUser = {
-      isAuth: true,
-      user: { name, email }
-    }
-  }
-  const store = configureStore(initialState);
+app.use("*", async (req, res) => {
+  const store = await configureStore(req);
   const markup = renderMarkup(req.originalUrl, store);
   const preloadedState = store.getState();
   res.send(renderHtml(markup, preloadedState));

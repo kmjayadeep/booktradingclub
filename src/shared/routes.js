@@ -5,11 +5,14 @@ import SignUp from "./containers/Signup";
 export const routes = [{
   path: "/",
   exact: true,
-  component: Home
+  component: Home,
+  name: 'home'
 }, {
   path: "/login",
-  component: Login
+  component: Login,
+  name: 'login'
 }, {
   path: "/signup",
-  component: SignUp
+  component: SignUp,
+  name: 'signup'
 }]

@@ -5,10 +5,13 @@ import { getBooks } from '../../api/book';
 export function loadBooks() {
   return async dispatch => {
     const books = await getBooks();
-    dispatch({ type: LOAD_BOOKS, books });
+    dispatch(setBooks(books));
   };
 }
 
-export function getBook(bookId) {
- //todo
+export function setBooks(books) {
+  return {
+    type: LOAD_BOOKS,
+    books
+  }
 }
