@@ -3,14 +3,9 @@ import { LOAD_BOOKS } from '../actionTypes';
 import { getBooks } from '../../api/book';
 
 export function loadBooks() {
-  return dispatch => {
-    getBooks()
-      .then(books => {
-        dispatch({ type: LOAD_BOOKS, books });
-      })
-      .catch(message => {
-        console.log(message);
-      });
+  return async dispatch => {
+    const books = await getBooks();
+    dispatch({ type: LOAD_BOOKS, books });
   };
 }
 

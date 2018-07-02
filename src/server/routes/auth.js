@@ -13,8 +13,9 @@ import ErrorCodes from "../helpers/errorCodes";
 router.post("/login/basic", (req, res) => {
   const { email, password } = req.body;
   loginBasic({ email, password })
-    .then(result => {
-      res.json(result);
+    .then(({token,user}) => {
+      res.cookie('token',token);
+      res.json({token,user});
     })
     .catch(err => {
       res.status(401).json({
@@ -50,6 +51,11 @@ router.put("/signup", (req, res) => {
       });
     });
 });
+
+router.get('/logout',(req,res)=>{
+  res.clearCookie('token');
+  res.json(true);
+})
 
 const formatErrorMessage =  error => {
   switch (error.code) {
