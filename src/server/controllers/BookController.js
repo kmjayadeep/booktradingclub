@@ -24,3 +24,22 @@ export const getBookByUser = async userId => {
     owner: userId
   });
 }
+
+export const requestBook = async(bookId, userId) => {
+  let book = await Book.findOne({
+    _id: bookId
+  })
+  if (!book) {
+    throw new Error("Invalid Book");
+  }
+  if (book.status != 'AVAILABLE') {
+    throw new Error("Unavailable Book");
+  }
+  const existingReq = book.requests.find(request => request.user.toString() == userId);
+  if (existingReq)
+    return book;
+  book.requests.push({
+    user: userId
+  })
+  return await book.save();
+}

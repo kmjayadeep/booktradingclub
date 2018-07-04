@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllBooks, addBook, deleteBook, getBookByUser } from "../controllers/BookController";
+import { getAllBooks, addBook, deleteBook, getBookByUser, requestBook } from "../controllers/BookController";
 import { requiresAuth } from '../middlewares/auth';
 const router = express.Router();
 
@@ -34,6 +34,19 @@ router.get("/my", requiresAuth, async(req, res) => {
   } catch (err) {
     res.status(400).json({
       message: "Unable to retrieve Books",
+      error: err
+    });
+  }
+});
+
+
+router.get("/request/:bookId", requiresAuth, async(req, res) => {
+  try {
+    const book = await requestBook(req.params.bookId, req.user._id);
+    res.json(book);
+  } catch (err) {
+    res.status(400).json({
+      message: "Unable to request Book",
       error: err
     });
   }
