@@ -1,46 +1,68 @@
 import express from "express";
-import { getAllBooks, addBook,deleteBook } from "../controllers/BookController";
+import { getAllBooks, addBook, deleteBook, getBookByUser } from "../controllers/BookController";
+import { requiresAuth } from '../middlewares/auth';
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  getAllBooks()
-    .then(books => {
-      res.json(books);
-    })
-    .catch(err => {
-      res.status(400).json({
-        message: "Unable to retrieve Books",
-        error: err
-      });
+router.get("/", async(req, res) => {
+  try {
+    const books = await getAllBooks();
+    res.json(books);
+  } catch (err) {
+    res.status(400).json({
+      message: "Unable to retrieve Books",
+      error: err
     });
+  }
 });
 
-router.put("/", (req, res) => {
+router.get("/user/:userId", async(req, res) => {
+  try {
+    const books = await getBookByUser(req.params.userId);
+    res.json(books);
+  } catch (err) {
+    res.status(400).json({
+      message: "Unable to retrieve Books",
+      error: err
+    });
+  }
+});
+
+router.get("/my", requiresAuth, async(req, res) => {
+  try {
+    const books = await getBookByUser(req.user._id);
+    res.json(books);
+  } catch (err) {
+    res.status(400).json({
+      message: "Unable to retrieve Books",
+      error: err
+    });
+  }
+});
+
+router.put("/", async(req, res) => {
   const { body, user } = req;
-  addBook(body, user)
-    .then(book => {
-      res.json(book);
-    })
-    .catch(err => {
-      res.status(400).json({
-        message: "Unable to save Book",
-        error: err
-      });
+  try {
+    const book = await addBook(body, user);
+    res.json(book);
+  } catch (err) {
+    res.status(400).json({
+      message: "Unable to save Book",
+      error: err
     });
+  }
 });
 
-router.delete("/:bookId", (req, res) => {
-  const {bookId} = req.params;
-  deleteBook(bookId)
-    .then(result => {
-      res.json(result);
-    })
-    .catch(err => {
-      res.status(400).json({
-        message: "Unable to delete Book",
-        error: err
-      });
+router.delete("/:bookId", async(req, res) => {
+  const { bookId } = req.params;
+  try {
+    const result = deleteBook(bookId)
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({
+      message: "Unable to delete Book",
+      error: err
     });
+  }
 });
 
 export default router;

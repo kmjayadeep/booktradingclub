@@ -1,5 +1,4 @@
 import express from "express";
-import User from "../models/User";
 const router = express.Router();
 import {
   loginBasic,
@@ -10,54 +9,52 @@ import {
 
 import ErrorCodes from "../helpers/errorCodes";
 
-router.post("/login/basic", (req, res) => {
+router.post("/login/basic", async(req, res) => {
   const { email, password } = req.body;
-  loginBasic({ email, password })
-    .then(({token,user}) => {
-      res.cookie('token',token);
-      res.json({token,user});
-    })
-    .catch(err => {
-      res.status(401).json({
-        message: "Invalid Email or Password",
-        errror: err
-      });
+  try {
+    const { token, user } = await loginBasic({ email, password });
+    res.cookie('token', token);
+    res.json({ token, user });
+  } catch (err) {
+    res.status(401).json({
+      message: "Invalid Email or Password",
+      errror: err
     });
+  }
 });
 
 router.get("/login/google", loginGoogle);
 
-router.get("/login/google/callback", (req, res) => {
-  loginGoogleCallback(req)
-    .then(result => {
-      res.json(result);
-    })
-    .catch(err => {
-      res.status(401).json({
-        message: "Unable to login",
-        error: err
-      });
+router.get("/login/google/callback", async(req, res) => {
+  try {
+    const { token } = await loginGoogleCallback(req)
+    res.cookie('token', token);
+    res.redirect('/');
+  } catch (err) {
+    res.status(401).json({
+      message: "Unable to login",
+      error: err
     });
+  }
 });
 
-router.put("/signup", (req, res) => {
-  signupBasic(req.body)
-    .then(result => {
-      return res.json(result);
-    })
-    .catch(err => {
-      res.status(400).json({
-        message: formatErrorMessage(err)
-      });
+router.put("/signup", async(req, res) => {
+  try {
+    const result = await signupBasic(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({
+      message: formatErrorMessage(err)
     });
+  }
 });
 
-router.get('/logout',(req,res)=>{
+router.get('/logout', (req, res) => {
   res.clearCookie('token');
-  res.json(true);
+  res.redirect('/');
 })
 
-const formatErrorMessage =  error => {
+const formatErrorMessage = error => {
   switch (error.code) {
     case ErrorCodes.UNKNOWN:
       return 'Unknown Error';

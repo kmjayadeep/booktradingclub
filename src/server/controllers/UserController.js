@@ -1,10 +1,10 @@
 import User from "../models/User";
 
-exports.getAllUsers = () => {
+export const getAllUsers = () => {
   return User.find();
 };
 
-exports.editUser = (body) => {
+export const editUser = (body) => {
   const User = new User(body);
   return User.save();
 };
