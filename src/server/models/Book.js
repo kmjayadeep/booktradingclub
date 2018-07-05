@@ -25,9 +25,14 @@ var schema = new Schema({
       default: Date.now
     }
   }],
-  lentTo: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
+  lent: {
+    to: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+    on: {
+      type: Date
+    }
   }
 });
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllBooks, addBook, deleteBook, getBookByUser, requestBook } from "../controllers/BookController";
+import { getAllBooks, addBook, deleteBook, getBookByUser, requestBook, approveRequest, getBookById, resetBook } from "../controllers/BookController";
 import { requiresAuth } from '../middlewares/auth';
 const router = express.Router();
 
@@ -39,15 +39,49 @@ router.get("/my", requiresAuth, async(req, res) => {
   }
 });
 
-
 router.get("/request/:bookId", requiresAuth, async(req, res) => {
   try {
     const book = await requestBook(req.params.bookId, req.user._id);
     res.json(book);
-  } catch (err) {
+  } catch (error) {
+    const message = error.message ? error.message : "Unable to request Book"
     res.status(400).json({
-      message: "Unable to request Book",
-      error: err
+      message,
+      error
+    });
+  }
+});
+
+router.get("/approve/:bookId/:userId", requiresAuth, async(req, res) => {
+  const { bookId, userId } = req.params;
+  try {
+    let book = await getBookById(bookId);
+    if (book.owner.toString() != req.user._id)
+      throw new Error("No Permission to approve book");
+    book = await approveRequest(bookId, userId);
+    res.json(book);
+  } catch (error) {
+    const message = error.message ? error.message : "Unable to approve Book"
+    res.status(400).json({
+      message,
+      error
+    });
+  }
+});
+
+router.get("/reset/:bookId", requiresAuth, async(req, res) => {
+  const { bookId } = req.params;
+  try {
+    let book = await getBookById(bookId);
+    if (book.owner.toString() != req.user._id)
+      throw new Error("No Permission to reset book");
+    book = await resetBook(bookId);
+    res.json(book);
+  } catch (error) {
+    const message = error.message ? error.message : "Unable to reset Book"
+    res.status(400).json({
+      message,
+      error
     });
   }
 });
