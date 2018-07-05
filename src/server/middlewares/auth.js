@@ -4,8 +4,9 @@ import User from '../models/User';
 
 export async function validateAuthHeaders(req, res, next) {
   let token = req.cookies.token;
-  if (!token) {
-    const auth = req.headers.authorization;
+  const auth = req.headers.authorization;
+  //use headers token if available and ignore token from cookies
+  if (!token || auth) {
     if (auth && auth.split(' ')[0] == 'Bearer' && auth.split(' ').length == 2)
       token = auth.split(' ')[1];
     else
@@ -26,9 +27,9 @@ export async function validateAuthHeaders(req, res, next) {
 }
 
 export function requiresAuth(req, res, next) {
-    if(req.user)
-        return next();
-    return res.status(401).json({
-        message: "Not logged in"
-    });
+  if (req.user)
+    return next();
+  return res.status(401).json({
+    message: "Not logged in"
+  });
 }
