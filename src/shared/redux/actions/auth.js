@@ -1,6 +1,6 @@
 import { LOGIN_REQUEST, LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_RESET } from "../actionTypes";
 const url = "/api/";
-import { login } from '../../api/auth';
+import { login, logout } from '../../api/auth';
 
 export function loginUser(credentials) {
   return async dispatch => {
@@ -13,6 +13,13 @@ export function loginUser(credentials) {
       await (new Promise(resolve => setTimeout(resolve, 3000)))
       dispatch(loginReset());
     }
+  }
+}
+
+export function logoutUser() {
+  return async dispatch => {
+    await logout();
+    dispatch(loginReset());
   }
 }
 
