@@ -3,7 +3,7 @@ import { getAllBooks, addBook, deleteBook, getBookByUser, requestBook, approveRe
 import { requiresAuth } from '../middlewares/auth';
 const router = express.Router();
 
-router.get("/", async(req, res) => {
+router.get("/", async (req, res) => {
   try {
     const books = await getAllBooks();
     res.json(books);
@@ -15,7 +15,7 @@ router.get("/", async(req, res) => {
   }
 });
 
-router.get("/user/:userId", async(req, res) => {
+router.get("/user/:userId", async (req, res) => {
   try {
     const books = await getBookByUser(req.params.userId);
     res.json(books);
@@ -27,7 +27,7 @@ router.get("/user/:userId", async(req, res) => {
   }
 });
 
-router.get("/my", requiresAuth, async(req, res) => {
+router.get("/my", requiresAuth, async (req, res) => {
   try {
     const books = await getBookByUser(req.user._id);
     res.json(books);
@@ -39,7 +39,7 @@ router.get("/my", requiresAuth, async(req, res) => {
   }
 });
 
-router.get("/request/:bookId", requiresAuth, async(req, res) => {
+router.get("/request/:bookId", requiresAuth, async (req, res) => {
   try {
     const book = await requestBook(req.params.bookId, req.user._id);
     res.json(book);
@@ -52,7 +52,7 @@ router.get("/request/:bookId", requiresAuth, async(req, res) => {
   }
 });
 
-router.get("/approve/:bookId/:userId", requiresAuth, async(req, res) => {
+router.get("/approve/:bookId/:userId", requiresAuth, async (req, res) => {
   const { bookId, userId } = req.params;
   try {
     let book = await getBookById(bookId);
@@ -69,7 +69,7 @@ router.get("/approve/:bookId/:userId", requiresAuth, async(req, res) => {
   }
 });
 
-router.get("/reset/:bookId", requiresAuth, async(req, res) => {
+router.get("/reset/:bookId", requiresAuth, async (req, res) => {
   const { bookId } = req.params;
   try {
     let book = await getBookById(bookId);
@@ -86,28 +86,33 @@ router.get("/reset/:bookId", requiresAuth, async(req, res) => {
   }
 });
 
-router.put("/", async(req, res) => {
+router.put("/", requiresAuth, async (req, res) => {
   const { body, user } = req;
   try {
-    const book = await addBook(body, user);
+    const book = await addBook(body, user._id);
     res.json(book);
-  } catch (err) {
+  } catch (error) {
     res.status(400).json({
       message: "Unable to save Book",
-      error: err
+      error
     });
   }
 });
 
-router.delete("/:bookId", async(req, res) => {
+router.delete("/:bookId", requiresAuth, async (req, res) => {
   const { bookId } = req.params;
+  const userId = req.user._id;
   try {
-    const result = deleteBook(bookId)
+    const book = await getBookById(bookId);
+    if (book.owner.toString() != req.user._id)
+      throw new Error("No Permission to delete book");
+    const result = await deleteBook(bookId);
     res.json(result);
-  } catch (err) {
+  } catch (error) {
+    const message = error.message ? error.message : "Unable to reset Book"
     res.status(400).json({
-      message: "Unable to delete Book",
-      error: err
+      message,
+      error
     });
   }
 });
