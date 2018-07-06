@@ -1,9 +1,7 @@
 const webpack = require("webpack");
-const autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-var nodeExternals = require('webpack-node-externals');
 
-const BrowserConfig = {
+module.exports = {
   entry: "./src/browser/index.js",
   output: {
     path: __dirname,
@@ -11,9 +9,8 @@ const BrowserConfig = {
   },
   devtool: "cheap-module-source-map",
   module: {
-    rules: [
-      {
-        test: [/\.jpe?g$/],
+    rules: [{
+        test: [/\.(jpe?g|png)$/],
         loader: "file-loader",
         options: {
           name: "public/media/[name].[ext]",
@@ -23,6 +20,16 @@ const BrowserConfig = {
       {
         test: /.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: 'public/fonts/[name].[ext]',
+            publicPath: url => url.replace(/public/, "")
+          }
+        }]
       },
       {
         test: /\.(js|jsx)$/,
@@ -41,42 +48,3 @@ const BrowserConfig = {
     })
   ]
 };
-
-const ServerConfig = {
-  entry: "./src/server/index.js",
-  target: "node",
-  externals: [nodeExternals()],
-  output: {
-    path: __dirname,
-    filename: "server.js",
-    libraryTarget: "commonjs2"
-  },
-  devtool: "cheap-module-source-map",
-  module: {
-    rules: [
-      {
-        test: [/\.jpe?g$/],
-        loader: "file-loader",
-        options: {
-          name: "public/media/[name].[ext]",
-          publicPath: url => url.replace(/public/, ""),
-          emit: false
-        }
-      },
-      {
-        test: /.css$/,
-        loader: "css-loader/locals"
-      },
-      {
-        test: /js|jsx$/,
-        exclude: /(node_modules)/,
-        loader: "babel-loader",
-        query: {
-          presets: ["react-app"]
-        }
-      }
-    ]
-  }
-};
-
-module.exports = [BrowserConfig, ServerConfig];
