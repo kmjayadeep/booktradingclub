@@ -5,28 +5,12 @@ import { StaticRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import JssProvider from 'react-jss/lib/JssProvider';
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  createGenerateClassName,
-} from '@material-ui/core/styles';
+import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
 
 import App from "../shared/App";
+import theme from '../shared/theme';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#26a69a"
-    },
-    secondary: {
-      main: "#ec407a"
-    }
-  }
-});
-
-export function renderMarkup(url, store){
-  const context = {};
-  const sheetsRegistry = new SheetsRegistry();
+function renderMarkup(url, store, context, sheetsRegistry){
   const generateClassName = createGenerateClassName();
   const markup = renderToString(
     <Provider store={store}>
@@ -39,11 +23,15 @@ export function renderMarkup(url, store){
       </StaticRouter>
     </Provider>
   );
-  const css = sheetsRegistry.toString()
-  return {markup,css};
+  return markup;
 }
 
-export function renderHtml(markup, css, preloadedState) {
+export function renderFullHtml(url, store) {
+  const context = {};
+  const sheetsRegistry = new SheetsRegistry();
+  const markup = renderMarkup(url, store, context, sheetsRegistry);
+  const css = sheetsRegistry.toString()
+  const preloadedState = store.getState();
   const serializedState = serialize(preloadedState);
   return `
     <html>

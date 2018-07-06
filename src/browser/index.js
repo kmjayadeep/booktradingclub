@@ -2,39 +2,15 @@ import React from "react";
 import { hydrate } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import App from "../shared/App";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import { configureStore } from "./store";
+import Main from './Main';
+import theme from '../shared/theme';
 
 const preloadedState = window.__PRELOADED_STATE__
 delete window.__PRELOADED_STATE__
 
 const store = configureStore(preloadedState);
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#26a69a"
-    },
-    secondary: {
-      main: "#ec407a"
-    }
-  }
-});
-
-class Main extends React.Component {
-  // Remove the server-side injected CSS.
-  componentDidMount() {
-    const jssStyles = document.getElementById('jss-server-side');
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }
-
-  render() {
-    return <App />
-  }
-}
 
 hydrate(
   <Provider store={store}>

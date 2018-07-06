@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import { configureStore } from "./store";
 import Routes from "./routes";
 import config from "./config";
-import { renderMarkup, renderHtml } from './render';
+import { renderFullHtml } from './render';
 import { validateAuthHeaders } from './middlewares/auth';
 
 const PORT = process.env.PORT || 3000;
@@ -38,11 +38,9 @@ passport.use(googleStrategy);
 app.use(validateAuthHeaders);
 app.use("/api", Routes);
 
-app.use("*", async (req, res) => {
+app.use("*", async(req, res) => {
   const store = await configureStore(req);
-  const {markup,css} = renderMarkup(req.originalUrl, store);
-  const preloadedState = store.getState();
-  res.send(renderHtml(markup, css, preloadedState));
+  res.send(renderFullHtml(req.originalUrl, store));
 });
 
 app.listen(PORT, () => {
