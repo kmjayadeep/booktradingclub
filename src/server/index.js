@@ -40,9 +40,9 @@ app.use("/api", Routes);
 
 app.use("*", async (req, res) => {
   const store = await configureStore(req);
-  const markup = renderMarkup(req.originalUrl, store);
+  const {markup,css} = renderMarkup(req.originalUrl, store);
   const preloadedState = store.getState();
-  res.send(renderHtml(markup, preloadedState));
+  res.send(renderHtml(markup, css, preloadedState));
 });
 
 app.listen(PORT, () => {
