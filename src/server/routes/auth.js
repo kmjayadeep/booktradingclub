@@ -38,7 +38,7 @@ router.get("/login/google/callback", async(req, res) => {
   }
 });
 
-router.put("/signup", async(req, res) => {
+router.post("/signup", async(req, res) => {
   try {
     const result = await signupBasic(req.body);
     res.json(result);
