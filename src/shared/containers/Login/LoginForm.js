@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import { Link } from 'react-router-dom';
-
 import { loginUser } from "../../redux/actions/auth";
 
 const mapStateToProps = state => {
@@ -44,16 +43,33 @@ class LoginForm extends Component {
   state = {
     email: "",
     password: "",
-  }
-  constructor(props) {
-    super(props);
-    this.handleLogin = this.handleLogin.bind(this);
+    loading: false,
+    loginError: null
   }
 
-  handleLogin() {
-    const credentials = this.state;
-    this.props.loginUser(credentials);
+  handleLogin = async()=>{
+    const { email, password } = this.state;
+    const credentials = { email, password};
+    this.setState({
+      loading: true
+    })
+    try{
+      await this.props.loginUser(credentials);
+    }catch(err){
+      this.setState({
+        loginError: err.message
+      })
+      setTimeout(() => {
+        this.setState({
+          loginError: null
+        })
+      }, 2000);
+    }
+    this.setState({
+      loading: false
+    })
   }
+
   render() {
     if (this.props.isAuth) {
       return <Redirect to='/' />;
@@ -71,7 +87,7 @@ class LoginForm extends Component {
                 required
                 type="email"
                 label="Email"
-                error={this.props.loginError!=null}
+                error={this.state.loginError!=null}
                 onChange={event => this.setState({ email: event.target.value })}
               />
             </Grid>
@@ -85,7 +101,7 @@ class LoginForm extends Component {
                 required
                 type="password"
                 label="Password"
-                error={this.props.loginError!=null}
+                error={this.state.loginError!=null}
                 onChange={event =>
                   this.setState({ password: event.target.value })}
               />
@@ -110,14 +126,14 @@ class LoginForm extends Component {
           </Grid>
         </Grid>
 
-        <Snackbar open={this.props.loginError!=null}>
+        <Snackbar open={this.state.loginError!=null}>
           <SnackbarContent
             className={classes.error}
             aria-describedby="client-snackbar"
             message={
               <span className={classes.message}>
                 <Icon className={classes.snackbarIcon}>error</Icon>
-                {this.props.loginError}
+                {this.state.loginError}
               </span>
             }
           />
