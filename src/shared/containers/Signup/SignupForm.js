@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
+import { Link } from 'react-router-dom';
 
 const styles = (theme)=>({
   signupForm: {
@@ -19,6 +20,12 @@ const styles = (theme)=>({
 });
 
 class SignupForm extends Component {
+  state = {
+    name: '',
+    userName: '',
+    password: '',
+    confirmPassword: ''
+  }
   render() {
     const { classes } = this.props;
     return <Grid container className={classes.signupForm} justify="center">
@@ -58,7 +65,7 @@ class SignupForm extends Component {
             <Button variant="outlined" color="primary">
               Signup
             </Button>
-            <Button variant="outlined" color="secondary">
+            <Button variant="outlined" to="/login" component={Link} color="secondary">
               Login
             </Button>
           </Grid>

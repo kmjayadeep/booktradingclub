@@ -5,6 +5,11 @@ export function login(credentials) {
     .post(`auth/login/basic`, credentials);
 }
 
-export function logout(){
+export function logout() {
   return request.get('auth/logout');
+}
+
+export function signup(userData) {
+  return request
+    .post('auth/signup', userData);
 }

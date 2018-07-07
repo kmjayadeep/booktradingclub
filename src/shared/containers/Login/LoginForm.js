@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Redirect} from 'react-router';
+import { Redirect } from 'react-router';
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -8,6 +8,7 @@ import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
+import { Link } from 'react-router-dom';
 
 import { loginUser } from "../../redux/actions/auth";
 
@@ -103,7 +104,7 @@ class LoginForm extends Component {
             >
               Login
             </Button>
-            <Button variant="outlined" color="secondary">
+            <Button variant="outlined" to="/signup" component={Link} color="secondary">
               Signup
             </Button>
           </Grid>
