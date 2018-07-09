@@ -4,13 +4,12 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
 import {Link} from 'react-router-dom';
 import {Redirect} from 'react-router';
 import {connect} from "react-redux";
 import {signupUser} from '../../redux/actions/auth';
 import timerPromise from '../../utils/timerPromise';
+import CustomSnackbar from "../../components/CustomSnackbar";
 
 const styles = (theme) => ({
   signupForm: {
@@ -22,20 +21,6 @@ const styles = (theme) => ({
   },
   signupButton: {
     marginTop: 30
-  },
-  error: {
-    backgroundColor: theme.palette.error.dark
-  },
-  success: {
-    backgroundColor: theme.palette.primary.dark
-  },
-  message: {
-    display: "flex",
-    alignItems: "center"
-  },
-  snackbarIcon: {
-    opacity: 0.9,
-    marginRight: theme.spacing.unit
   }
 });
 
@@ -69,9 +54,7 @@ class SignupForm extends Component {
     if (!this.validateFields(fields)) 
       return;
     try {
-      await this
-        .props
-        .signupUser(fields);
+      await this.props.signupUser(fields);
       this.setState({signupSuccess: true})
       await timerPromise(2000);
       this.setState({redirectLogin: true})
@@ -163,24 +146,14 @@ class SignupForm extends Component {
           </Grid>
         </Grid>
 
-        <Snackbar open={this.state.signupError != null}>
-          <SnackbarContent
-            className={classes.error}
-            aria-describedby="client-snackbar"
-            message={< span className = {
-            classes.message
-          } > <Icon className={classes.snackbarIcon}>error</Icon>
-            {this.state.signupError} </span>}/>
-        </Snackbar>
-
-        <Snackbar open={this.state.signupSuccess != null}>
-          <SnackbarContent
-            className={classes.success}
-            aria-describedby="client-snackbar"
-            message={< span className = {
-            classes.message
-          } > <Icon className={classes.snackbarIcon}>error</Icon>Signup Success !Please Login </span>}/>
-        </Snackbar>
+        <CustomSnackbar
+          open={this.state.signupError != null}
+          message={this.state.signupError}
+          type="error"/>
+        <CustomSnackbar
+          open={this.state.signupSuccess != null}
+          message="Signup Success! Please Login"
+          />
 
       </Grid>
     );
