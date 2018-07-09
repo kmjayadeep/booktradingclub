@@ -9,3 +9,4 @@ export const VIEW_BOOK = "VIEW_BOOK";
 //auth
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
+export const LOGIN_RESET = "LOGIN_RESET";
