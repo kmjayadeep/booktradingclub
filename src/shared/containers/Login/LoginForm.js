@@ -41,12 +41,9 @@ const styles = theme => ({
 
 class LoginForm extends Component {
   state = {
-    email: "",
-    password: "",
-    loading: false,
-    loginError: null
+    loginError: null,
+    loading: false
   }
-
   handleLogin = async()=>{
     const { email, password } = this.state;
     const credentials = { email, password};
@@ -70,6 +67,12 @@ class LoginForm extends Component {
     })
   }
 
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   render() {
     if (this.props.isAuth) {
       return <Redirect to='/' />;
@@ -87,8 +90,9 @@ class LoginForm extends Component {
                 required
                 type="email"
                 label="Email"
+                name="email"
                 error={this.state.loginError!=null}
-                onChange={event => this.setState({ email: event.target.value })}
+                onChange={this.handleChange}
               />
             </Grid>
           </Grid>
@@ -102,8 +106,8 @@ class LoginForm extends Component {
                 type="password"
                 label="Password"
                 error={this.state.loginError!=null}
-                onChange={event =>
-                  this.setState({ password: event.target.value })}
+                name="password"
+                onChange={this.handleChange}
               />
             </Grid>
           </Grid>
