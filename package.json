@@ -8,7 +8,7 @@
     "dev": "NODE_ENV=development webpack -w --mode development & NODE_ENV=development nodemon bootstrap.js",
     "server": "NODE_ENV=development nodemon bootstrap.js",
     "webpack": "NODE_ENV=development webpack -w --mode development",
-    "test": "mocha --require babel-core/register src/server/tests/**/*.spec.js --watch"
+    "test": "mocha --require babel-core/register --require babel-polyfill src/server/tests/**/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -43,6 +43,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react-app": "^3.1.1",
     "chai": "^4.1.2",
