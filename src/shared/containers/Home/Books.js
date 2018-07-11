@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import CardHeader from "@material-ui/core/CardHeader";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import CardHeader from '@material-ui/core/CardHeader';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/core/Icon';
 
-import { loadBooks } from "../../redux/actions/book";
+import { loadBooks } from '../../redux/actions/book';
 
 const mapStateToProps = state => {
   return {
@@ -27,8 +27,7 @@ const styles = {
 
 class Books extends Component {
   componentDidMount() {
-    if(this.props.books.length==0)
-      this.props.loadBooks();
+    if (this.props.books.length == 0) this.props.loadBooks();
   }
   render() {
     const { classes, books } = this.props;
@@ -37,10 +36,7 @@ class Books extends Component {
         {books.map(book => (
           <Grid key={book._id} item xs={12} sm={6} md={4} xl={3}>
             <Card>
-              <CardHeader
-                title={book.title}
-                subheader={book.author}
-              />
+              <CardHeader title={book.title} subheader={book.author} />
               <CardContent>
                 <Grid container>
                   <Icon color="primary">person</Icon>
@@ -67,5 +63,8 @@ class Books extends Component {
   }
 }
 
-const ConnectedComponent = connect(mapStateToProps, { loadBooks })(Books);
+const ConnectedComponent = connect(
+  mapStateToProps,
+  { loadBooks }
+)(Books);
 export default withStyles(styles)(ConnectedComponent);

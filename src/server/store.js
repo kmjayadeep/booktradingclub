@@ -1,8 +1,8 @@
-import { createStore } from "redux";
-import { loginSuccess } from "../shared/redux/actions/auth";
-import { setBooks } from "../shared/redux/actions/book";
+import { createStore } from 'redux';
+import { loginSuccess } from '../shared/redux/actions/auth';
+import { setBooks } from '../shared/redux/actions/book';
 import reducer from '../shared/redux/reducer';
-import { matchPath } from 'react-router-dom'
+import { matchPath } from 'react-router-dom';
 import { routes } from '../shared/routes';
 import { getAllBooks } from './controllers/BookController';
 
@@ -13,15 +13,15 @@ export const configureStore = async req => {
     store.dispatch(loginSuccess({ name, email }));
   }
   let url = req.baseUrl + req.path;
-  url = url.replace(/\/$/, "");
+  url = url.replace(/\/$/, '');
   const matchedRoutes = routes.filter(route => {
     return matchPath(url, route);
-  })
-  for(let route of matchedRoutes){
+  });
+  for (let route of matchedRoutes) {
     if (route.name == 'home') {
       const books = await getAllBooks();
       store.dispatch(setBooks(books));
     }
   }
   return store;
-}
+};

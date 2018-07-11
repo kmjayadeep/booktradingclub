@@ -13,5 +13,5 @@ export function setBooks(books) {
   return {
     type: LOAD_BOOKS,
     books
-  }
+  };
 }

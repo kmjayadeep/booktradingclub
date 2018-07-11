@@ -1,10 +1,10 @@
-import React from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import { withStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
+import React from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { withStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/core/Icon';
 
-const styles = (theme) => ({
+const styles = theme => ({
   error: {
     backgroundColor: theme.palette.error.dark
   },
@@ -12,8 +12,8 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.primary.dark
   },
   message: {
-    display: "flex",
-    alignItems: "center"
+    display: 'flex',
+    alignItems: 'center'
   },
   snackbarIcon: {
     opacity: 0.9,
@@ -21,21 +21,23 @@ const styles = (theme) => ({
   }
 });
 
-const CustomSnackbar = ({open, message, type='success',classes}) => {
+const CustomSnackbar = ({ open, message, type = 'success', classes }) => {
   let icon = 'done';
-  if(type == 'error')
-    icon = 'error';
+  if (type == 'error') icon = 'error';
   return (
     <Snackbar open={open}>
       <SnackbarContent
         className={classes[type]}
         aria-describedby="client-snackbar"
-        message={<span className={classes.message} >
-          <Icon className={classes.snackbarIcon}>{icon}</Icon>
-          {message}
-        </span>}/>
+        message={
+          <span className={classes.message}>
+            <Icon className={classes.snackbarIcon}>{icon}</Icon>
+            {message}
+          </span>
+        }
+      />
     </Snackbar>
   );
-}
+};
 
 export default withStyles(styles)(CustomSnackbar);

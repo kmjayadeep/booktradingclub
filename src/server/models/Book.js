@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 var schema = new Schema({
   title: {
@@ -8,27 +8,29 @@ var schema = new Schema({
   author: String,
   owner: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User'
   },
   status: {
     type: String,
     enum: ['AVAILABLE', 'UNAVAILABLE'],
     default: 'AVAILABLE'
   },
-  requests: [{
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    },
-    requestedOn: {
-      type: Date,
-      default: Date.now
+  requests: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      requestedOn: {
+        type: Date,
+        default: Date.now
+      }
     }
-  }],
+  ],
   lent: {
     to: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User'
     },
     on: {
       type: Date
@@ -36,6 +38,6 @@ var schema = new Schema({
   }
 });
 
-var Book = mongoose.model("Book", schema);
+var Book = mongoose.model('Book', schema);
 
 export default Book;

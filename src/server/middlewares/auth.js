@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 import config from '../config';
 import User from '../models/User';
 
@@ -9,8 +9,7 @@ export async function validateAuthHeaders(req, res, next) {
   if (!token || auth) {
     if (auth && auth.split(' ')[0] == 'Bearer' && auth.split(' ').length == 2)
       token = auth.split(' ')[1];
-    else
-      return next();
+    else return next();
   }
   //got token
   try {
@@ -27,9 +26,8 @@ export async function validateAuthHeaders(req, res, next) {
 }
 
 export function requiresAuth(req, res, next) {
-  if (req.user)
-    return next();
+  if (req.user) return next();
   return res.status(401).json({
-    message: "Not logged in"
+    message: 'Not logged in'
   });
 }

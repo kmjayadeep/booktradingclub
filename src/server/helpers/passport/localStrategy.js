@@ -1,12 +1,12 @@
-import jwt from "jsonwebtoken";
-import User from "../../models/User";
-import { Strategy as PassportLocalStrategy } from "passport-local";
-import config from "../../config";
+import jwt from 'jsonwebtoken';
+import User from '../../models/User';
+import { Strategy as PassportLocalStrategy } from 'passport-local';
+import config from '../../config';
 
 export default new PassportLocalStrategy(
   {
-    usernameField: "email",
-    passwordField: "password",
+    usernameField: 'email',
+    passwordField: 'password',
     session: false
   },
   (email, password, done) => {
@@ -18,7 +18,7 @@ export default new PassportLocalStrategy(
 
       if (!user) {
         const error = {
-          message: "Incorrect Email Id or Password"
+          message: 'Incorrect Email Id or Password'
         };
         return done(error);
       }
@@ -43,12 +43,14 @@ export default new PassportLocalStrategy(
         });
       } else {
         const error = {
-          message: "Incorrect Email Id or Password"
+          message: 'Incorrect Email Id or Password'
         };
         return done(error);
       }
-    }).catch(err => done({
-        message: "Unable to login"
-    }));
+    }).catch(err =>
+      done({
+        message: 'Unable to login'
+      })
+    );
   }
 );

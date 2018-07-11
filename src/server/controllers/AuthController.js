@@ -1,10 +1,10 @@
-import User from "../models/User";
-import passport from "passport";
-import moongooseErrorFormatter from "../helpers/mongooseErrorFormatter";
+import User from '../models/User';
+import passport from 'passport';
+import moongooseErrorFormatter from '../helpers/mongooseErrorFormatter';
 
 export const loginBasic = credentials => {
   return new Promise((resolve, reject) => {
-    passport.authenticate("local", { session: false }, (err, token, user) => {
+    passport.authenticate('local', { session: false }, (err, token, user) => {
       if (err || !token) {
         return reject(new Error(err));
       }
@@ -16,11 +16,11 @@ export const loginBasic = credentials => {
 //need req param to parse query parameters by passport
 //need res param to redirect to google auth url
 export const loginGoogle = (req, res) => {
-  passport.authenticate("google", {
+  passport.authenticate('google', {
     session: false,
     scope: [
-      "https://www.googleapis.com/auth/plus.login",
-      "https://www.googleapis.com/auth/plus.profile.emails.read"
+      'https://www.googleapis.com/auth/plus.login',
+      'https://www.googleapis.com/auth/plus.profile.emails.read'
     ]
   })(req, res);
 };
@@ -28,7 +28,7 @@ export const loginGoogle = (req, res) => {
 //need req param to parse profile from google
 export const loginGoogleCallback = req => {
   return new Promise((resolve, reject) => {
-    passport.authenticate("google", { session: false }, (err, token, user) => {
+    passport.authenticate('google', { session: false }, (err, token, user) => {
       if (err || !token) {
         return reject(new Error(err));
       }
@@ -45,7 +45,7 @@ export const signupBasic = async body => {
     password
   });
   try {
-    const { name, email } = await user.save()
+    const { name, email } = await user.save();
     return { name, email };
   } catch (err) {
     throw moongooseErrorFormatter(err);

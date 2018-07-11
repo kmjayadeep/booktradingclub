@@ -4,12 +4,12 @@ const initialState = {
 };
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "LOAD_BOOKS":
+    case 'LOAD_BOOKS':
       return {
         ...state,
         books: action.books
       };
-    case "VIEW_BOOK":
+    case 'VIEW_BOOK':
       return {
         ...state,
         book: action.book

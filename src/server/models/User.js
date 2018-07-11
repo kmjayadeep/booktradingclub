@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-import {sha512, generateSalt} from "../helpers/cryptoHelper";
+import mongoose, { Schema } from 'mongoose';
+import { sha512, generateSalt } from '../helpers/cryptoHelper';
 
 var schema = new Schema({
   name: {
@@ -19,17 +19,16 @@ var schema = new Schema({
   address: String,
   state: String,
   contact: String, //Phone/email/Where to find you?
-  google:{
+  google: {
     profile: Schema.Types.Mixed
   }
 });
 
-
-schema.pre("save", function(next) {
+schema.pre('save', function(next) {
   let user = this;
   // only hash the password if it has been modified (or is new)
-  if (!user.isModified("password")) return next();
-  
+  if (!user.isModified('password')) return next();
+
   const salt = generateSalt();
   user.password = sha512(user.password, salt);
   user.passwordSalt = salt;
@@ -43,6 +42,6 @@ schema.methods.comparePassword = function(password) {
   return hashedPassword === user.password;
 };
 
-var User = mongoose.model("User", schema);
+var User = mongoose.model('User', schema);
 
 export default User;

@@ -1,7 +1,4 @@
-import {
-  LOGIN_SUCCESS,
-  LOGIN_RESET
-} from "../actionTypes";
+import { LOGIN_SUCCESS, LOGIN_RESET } from '../actionTypes';
 
 const initialState = {
   isAuth: false,

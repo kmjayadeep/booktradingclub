@@ -1,25 +1,25 @@
-import { LOGIN_SUCCESS, LOGIN_RESET } from "../actionTypes";
-const url = "/api/";
+import { LOGIN_SUCCESS, LOGIN_RESET } from '../actionTypes';
+const url = '/api/';
 import { login, logout, signup } from '../../api/auth';
 
 export function loginUser(credentials) {
   return async dispatch => {
-    const { user } = await login(credentials)
+    const { user } = await login(credentials);
     dispatch(loginSuccess(user));
-  }
+  };
 }
 
 export function signupUser(userData) {
   return async dispatch => {
     await signup(userData);
-  }
+  };
 }
 
 export function logoutUser() {
   return async dispatch => {
     await logout();
     dispatch(loginReset());
-  }
+  };
 }
 
 export function loginSuccess(user) {
@@ -32,5 +32,5 @@ export function loginSuccess(user) {
 export function loginReset() {
   return {
     type: LOGIN_RESET
-  }
+  };
 }

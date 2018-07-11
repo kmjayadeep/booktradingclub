@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import App from "../shared/App";
+import App from '../shared/App';
 class Main extends React.Component {
   // Remove the server-side injected CSS.
   componentDidMount() {
@@ -10,7 +10,7 @@ class Main extends React.Component {
   }
 
   render() {
-    return <App / >
+    return <App />;
   }
 }
 

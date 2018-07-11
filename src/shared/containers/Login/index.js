@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
-import LoginForm from "./LoginForm";
+import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import LoginForm from './LoginForm';
 
 const styles = theme => ({
   root: {
-    overflow: "hidden"
+    overflow: 'hidden'
   },
   container: {
     flexGrow: 1
@@ -20,9 +20,15 @@ const styles = theme => ({
 
 class Login extends Component {
   render() {
-    const {classes} = this.props;
-    return <div className={classes.root}>
-        <Grid container className={classes.container} spacing={24} justify="center">
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <Grid
+          container
+          className={classes.container}
+          spacing={24}
+          justify="center"
+        >
           <Grid item xs={12} sm={6} md={4} lg={4} className={classes.card}>
             <Card>
               <CardContent>
@@ -37,7 +43,8 @@ class Login extends Component {
             </Card>
           </Grid>
         </Grid>
-      </div>;
+      </div>
+    );
   }
 }
 

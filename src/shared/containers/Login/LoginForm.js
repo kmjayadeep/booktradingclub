@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Icon from "@material-ui/core/Icon";
-import Button from "@material-ui/core/Button";
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { loginUser } from "../../redux/actions/auth";
-import CustomSnackbar from "../../components/CustomSnackbar";
+import { loginUser } from '../../redux/actions/auth';
+import CustomSnackbar from '../../components/CustomSnackbar';
 
 const mapStateToProps = state => {
-  return state.authUser
+  return state.authUser;
 };
 
 const styles = theme => ({
@@ -31,39 +31,39 @@ class LoginForm extends Component {
   state = {
     loginError: null,
     loading: false
-  }
-  handleLogin = async()=>{
+  };
+  handleLogin = async () => {
     const { email, password } = this.state;
-    const credentials = { email, password};
+    const credentials = { email, password };
     this.setState({
       loading: true
-    })
-    try{
+    });
+    try {
       await this.props.loginUser(credentials);
-    }catch(err){
+    } catch (err) {
       this.setState({
         loginError: err.message
-      })
+      });
       setTimeout(() => {
         this.setState({
           loginError: null
-        })
+        });
       }, 2000);
     }
     this.setState({
       loading: false
-    })
-  }
+    });
+  };
 
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
-    })
-  }
+    });
+  };
 
   render() {
     if (this.props.isAuth) {
-      return <Redirect to='/' />;
+      return <Redirect to="/" />;
     }
     const { classes } = this.props;
     return (
@@ -79,7 +79,7 @@ class LoginForm extends Component {
                 type="email"
                 label="Email"
                 name="email"
-                error={this.state.loginError!=null}
+                error={this.state.loginError != null}
                 onChange={this.handleChange}
               />
             </Grid>
@@ -93,7 +93,7 @@ class LoginForm extends Component {
                 required
                 type="password"
                 label="Password"
-                error={this.state.loginError!=null}
+                error={this.state.loginError != null}
                 name="password"
                 onChange={this.handleChange}
               />
@@ -112,21 +112,29 @@ class LoginForm extends Component {
             >
               Login
             </Button>
-            <Button variant="outlined" to="/signup" component={Link} color="secondary">
+            <Button
+              variant="outlined"
+              to="/signup"
+              component={Link}
+              color="secondary"
+            >
               Signup
             </Button>
           </Grid>
         </Grid>
 
-        <CustomSnackbar 
+        <CustomSnackbar
           open={this.state.loginError != null}
-          message={this.state.loginError} type="error"
+          message={this.state.loginError}
+          type="error"
         />
-
       </Grid>
     );
   }
 }
 
-const ConnectedComponent = connect(mapStateToProps, { loginUser })(LoginForm);
+const ConnectedComponent = connect(
+  mapStateToProps,
+  { loginUser }
+)(LoginForm);
 export default withStyles(styles)(ConnectedComponent);

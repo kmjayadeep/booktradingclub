@@ -1,15 +1,15 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
 import {
   loginBasic,
   loginGoogle,
   loginGoogleCallback,
   signupBasic
-} from "../controllers/AuthController";
+} from '../controllers/AuthController';
 
-import ErrorCodes from "../helpers/errorCodes";
+import ErrorCodes from '../helpers/errorCodes';
 
-router.post("/login/basic", async(req, res) => {
+router.post('/login/basic', async (req, res) => {
   const { email, password } = req.body;
   try {
     const { token, user } = await loginBasic({ email, password });
@@ -17,28 +17,28 @@ router.post("/login/basic", async(req, res) => {
     res.json({ token, user });
   } catch (err) {
     res.status(401).json({
-      message: "Invalid Email or Password",
+      message: 'Invalid Email or Password',
       errror: err
     });
   }
 });
 
-router.get("/login/google", loginGoogle);
+router.get('/login/google', loginGoogle);
 
-router.get("/login/google/callback", async(req, res) => {
+router.get('/login/google/callback', async (req, res) => {
   try {
-    const { token } = await loginGoogleCallback(req)
+    const { token } = await loginGoogleCallback(req);
     res.cookie('token', token);
     res.redirect('/');
   } catch (err) {
     res.status(401).json({
-      message: "Unable to login",
+      message: 'Unable to login',
       error: err
     });
   }
 });
 
-router.post("/signup", async(req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const result = await signupBasic(req.body);
     res.json(result);
@@ -52,7 +52,7 @@ router.post("/signup", async(req, res) => {
 router.get('/logout', (req, res) => {
   res.clearCookie('token');
   res.redirect('/');
-})
+});
 
 const formatErrorMessage = error => {
   switch (error.code) {
