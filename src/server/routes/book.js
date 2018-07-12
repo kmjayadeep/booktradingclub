@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getAllBooks,
+  getAllActiveBooks,
   addBook,
   deleteBook,
   getBookByUser,
@@ -14,9 +14,10 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const books = await getAllBooks();
+    const books = await getAllActiveBooks();
     res.json(books);
   } catch (err) {
+    console.log(err)
     res.status(400).json({
       message: 'Unable to retrieve Books',
       error: err
