@@ -4,7 +4,7 @@ import { setBooks } from '../shared/redux/actions/book';
 import reducer from '../shared/redux/reducer';
 import { matchPath } from 'react-router-dom';
 import { routes } from '../shared/routes';
-import { getAllBooks } from './controllers/BookController';
+import { getAllActiveBooks } from './controllers/BookController';
 
 export const configureStore = async req => {
   const store = createStore(reducer);
@@ -19,7 +19,7 @@ export const configureStore = async req => {
   });
   for (let route of matchedRoutes) {
     if (route.name == 'home') {
-      const books = await getAllBooks();
+      const books = await getAllActiveBooks();
       store.dispatch(setBooks(books));
     }
   }

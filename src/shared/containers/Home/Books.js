@@ -40,11 +40,11 @@ class Books extends Component {
               <CardContent>
                 <Grid container>
                   <Icon color="primary">person</Icon>
-                  <Typography variant="subheading">Stephen hawking</Typography>
+                  <Typography variant="subheading">{book.owner.name}</Typography>
                 </Grid>
                 <Grid container>
                   <Icon color="secondary">location_on</Icon>
-                  <Typography variant="body2">Kanhangad</Typography>
+                  <Typography variant="body2">{book.owner.city}</Typography>
                 </Grid>
               </CardContent>
               <CardActions>
