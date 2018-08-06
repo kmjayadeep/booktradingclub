@@ -2,7 +2,7 @@
 // import Login from './containers/Login';
 // import Logout from './containers/Logout';
 // import SignUp from './containers/Signup';
-// import NotFound from './containers/NotFound';
+import NotFound from './containers/NotFound';
 
 export const routes = [
   // {
@@ -26,8 +26,8 @@ export const routes = [
   //   component: SignUp,
   //   name: 'signup'
   // },
-  // {
-  //   component: NotFound,
-  //   name: 'notfound'
-  // }
+  {
+    component: NotFound,
+    name: 'notfound'
+  }
 ];
