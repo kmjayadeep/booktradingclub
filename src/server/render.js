@@ -1,31 +1,16 @@
 import React from 'react';
 import serialize from 'serialize-javascript';
-import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { SheetsRegistry } from 'react-jss/lib/jss';
-import JssProvider from 'react-jss/lib/JssProvider';
-import {
-  MuiThemeProvider,
-  createGenerateClassName
-} from '@material-ui/core/styles';
+import {renderToString} from 'react-dom/server';
+import {StaticRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
 
 import App from '../shared/App';
-import theme from '../shared/theme';
 
-function renderMarkup(url, store, context, sheetsRegistry) {
-  const generateClassName = createGenerateClassName();
+function renderMarkup(url, store, context) {
   const markup = renderToString(
     <Provider store={store}>
       <StaticRouter location={url} context={context}>
-        <JssProvider
-          registry={sheetsRegistry}
-          generateClassName={generateClassName}
-        >
-          <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-            <App />
-          </MuiThemeProvider>
-        </JssProvider>
+        <App/>
       </StaticRouter>
     </Provider>
   );
@@ -34,9 +19,7 @@ function renderMarkup(url, store, context, sheetsRegistry) {
 
 export function renderFullHtml(url, store) {
   const context = {};
-  const sheetsRegistry = new SheetsRegistry();
-  const markup = renderMarkup(url, store, context, sheetsRegistry);
-  const css = sheetsRegistry.toString();
+  const markup = renderMarkup(url, store, context);
   const preloadedState = store.getState();
   const serializedState = serialize(preloadedState);
   return `
@@ -47,7 +30,6 @@ export function renderFullHtml(url, store) {
         </head>
         <body>
             <div id="app-root">${markup}</div>
-            <style id="jss-server-side">${css}</style>
             <script>
               window.__PRELOADED_STATE__ = ${serializedState}
             </script>

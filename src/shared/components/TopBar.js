@@ -1,124 +1,64 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import { Link } from 'react-router-dom';
+import MaterialIcon from './MaterialIcon';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import HomeIcon from '@material-ui/icons/Home';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-import Icon from '@material-ui/core/Icon';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 
-const mapStateToProps = state => {
-  return {
-    isAuth: state.authUser.isAuth,
-    user: state.authUser.user
-  };
-};
-
-const styles = {
-  root: {
-    height: 64
-  },
-  flex: {
-    flex: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  }
-};
-
-class TopBar extends Component {
+export default class Topbar extends Component{
   state = {
-    anchorEl: null
-  };
-
-  handleMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  render() {
-    const { classes, isAuth, user } = this.props;
-    const { anchorEl } = this.state;
+    isOpen: false
+  }
+  toggle = ()=>{
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+  render(){
+    const {isAuth, user} = this.props;
     return (
-      <div className={classes.root}>
-        <AppBar position="fixed">
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="Menu"
-              className={classes.menuButton}
-              component={Link}
-              to="/"
-            >
-              <HomeIcon />
-            </IconButton>
-            <Typography
-              variant="title"
-              color="inherit"
-              className={classes.flex}
-            >
-              BookSharingApp
-            </Typography>
-            {!isAuth && (
-              <Button color="inherit" to="/login" component={Link}>
-                Login
-              </Button>
-            )}
-            {!isAuth && (
-              <Button color="inherit" to="/signup" component={Link}>
-                Signup
-              </Button>
-            )}
-            {isAuth && (
-              <div>
-                <Button
-                  color="inherit"
-                  aria-owns={anchorEl ? 'simple-menu' : null}
-                  aria-haspopup="true"
-                  onClick={this.handleMenuOpen}
-                >
-                  {user.name}
-                  <Icon>person</Icon>
-                </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={this.handleMenuClose}
-                >
-                  <MenuItem
-                    onClick={this.handleMenuClose}
-                    to="/profile"
-                    component={Link}
-                  >
-                    Profile
-                  </MenuItem>
-                  <MenuItem
-                    onClick={this.handleMenuClose}
-                    to="/logout"
-                    component={Link}
-                  >
-                    Logout
-                  </MenuItem>
-                </Menu>
-              </div>
-            )}
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
+      <Navbar color="dark" dark expand="md">
+        <Link to="/" className="navbar-brand">BookSharingApp</Link>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+           { isAuth || 
+            <Fragment>
+              <NavItem>
+                <Link to="/login" className="nav-link">Login</Link>
+              </NavItem>
+              <NavItem>
+                <Link to="/signup" className="nav-link">Signup</Link>
+              </NavItem>
+            </Fragment>
+           }{ isAuth &&
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                {user.name}
+                </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  <Link to="/profile">Profile</Link>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <Link to="/logout">Logout</Link>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+           }
+          </Nav>
+        </Collapse>
+      </Navbar>
+    )
   }
 }
-
-const ConnectedComponent = connect(mapStateToProps)(TopBar);
-export default withStyles(styles)(ConnectedComponent);
