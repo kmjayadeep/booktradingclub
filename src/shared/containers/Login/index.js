@@ -1,51 +1,37 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import LoginForm from './LoginForm';
+import {
+  Button,
+  Form,
+  Input,
+  Card,
+  CardBody,
+  CardImg,
+  Container,
+  CardTitle,
+  CardSubtitle,
+} from 'reactstrap';
 
-const styles = theme => ({
-  root: {
-    overflow: 'hidden'
-  },
-  container: {
-    flexGrow: 1
-  },
-  card: {
-    margin: 20
-  }
-});
+import "./Login.css";
 
 class Login extends Component {
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <Grid
-          container
-          className={classes.container}
-          spacing={24}
-          justify="center"
-        >
-          <Grid item xs={12} sm={6} md={4} lg={4} className={classes.card}>
-            <Card>
-              <CardContent>
-                <Typography variant="headline" component="h2">
-                  Login
-                </Typography>
-                <Typography color="textSecondary">
-                  to Trade Books & More
-                </Typography>
-                <LoginForm />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </div>
+      <Container>
+        <Card id="login-card">
+          <CardImg top width="100%" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
+          <CardBody>
+            <CardTitle>Login</CardTitle>
+            <CardSubtitle>To access thousands of books around you</CardSubtitle>
+            <Form id="login-form">
+            <Input type="email" name="email" id="inputEmail" placeholder="Email Address" required/>
+            <Input type="password" name="password" id="inputPassword" placeholder="Password" required/>
+            <Button color="primary" block>Sign In</Button>
+            </Form>
+          </CardBody>
+        </Card>
+      </Container>
     );
   }
 }
 
-export default withStyles(styles)(Login);
+export default Login;
