@@ -1,49 +1,61 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Books from './Books';
+import { connect } from 'react-redux';
+import {
+  Row,
+  Col,
+  Container,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button,
+  CardFooter
+} from 'reactstrap';
 
-import { withStyles } from '@material-ui/core/styles';
+import { loadBooks } from '../../redux/actions/book';
 
-const styles = theme => ({
-  root: {
-    overflow: 'hidden'
-  },
-  container: {
-    flexGrow: 1
-  },
-  card: {
-    margin: 20
-  }
-});
+const mapStateToProps = state => {
+  return {
+    books: state.book.books
+  };
+};
 
 class Home extends Component {
+  componentDidMount() {
+    if (this.props.books.length == 0) this.props.loadBooks();
+  }
   render() {
-    const { classes } = this.props;
+    const { books } = this.props;
     return (
-      <div className={classes.root}>
-        <Grid container className={classes.container} spacing={24}>
-          <Grid item xs={12} className={classes.card}>
+      <Container>
+        <Row>
+        {books.map(book => (
+          <Col key={book._id}>
             <Card>
-              <CardContent>
-                <Typography variant="headline" component="h2">
-                  Books
-                </Typography>
-                <Typography color="textSecondary">
-                  Available for Trade
-                </Typography>
-                <Books />
-              </CardContent>
+              <CardTitle>{book.title}</CardTitle>
+              <CardSubtitle>{book.author}</CardSubtitle>
+              <CardBody>
+                  <p>{book.owner.name}</p>
+                  <p>{book.owner.city}</p>
+              </CardBody>
+              <CardFooter>
+                <Button size="small" color="primary" variant="outlined">
+                  Request
+                </Button>
+                <Button size="small" variant="outlined">
+                  View Details
+                </Button>
+              </CardFooter>
             </Card>
-          </Grid>
-        </Grid>
-      </div>
+          </Col>
+        ))}
+        </Row>
+      </Container>
     );
   }
 }
 
-export default withStyles(styles)(Home);
+export default connect(
+  mapStateToProps,
+  { loadBooks }
+)(Home);
