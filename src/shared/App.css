@@ -4,3 +4,10 @@
 body {
   margin: 0;
 }
+
+button a{
+  color: inherit;
+}
+button a:hover{
+  text-decoration: none;
+}
