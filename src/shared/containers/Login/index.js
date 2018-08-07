@@ -31,12 +31,14 @@ class Login extends Component {
     loading: false
   };
 
+  setLoading = loading => {
+    this.setState({loading})
+  }
+
   handleLogin = async () => {
     const { email, password } = this.state;
     const credentials = { email, password };
-    this.setState({
-      loading: true
-    });
+    this.setLoading(true);
     try {
       await this.props.loginUser(credentials);
     } catch (err) {
@@ -44,16 +46,13 @@ class Login extends Component {
         loginError: err.message
       });
     }
-    this.setState({
-      loading: false
-    });
+    this.setLoading(false);
   };
 
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
-    console.log(this.state)
   };
 
   render() {
@@ -67,11 +66,10 @@ class Login extends Component {
           <CardBody>
             <CardTitle>Login</CardTitle>
             <CardSubtitle>To access thousands of books around you</CardSubtitle>
-           
             <Form id="login-form">
             <Input type="email" name="email" id="inputEmail" placeholder="Email Address" required onChange={this.handleChange}/>
             <FormGroup>
-            <Input type="password" name="password" id="inputPassword" placeholder="Password" required onChange={this.handleChange} invalid={this.state.loginError}/>
+            <Input type="password" name="password" id="inputPassword" placeholder="Password" required onChange={this.handleChange} invalid={this.state.loginError!=null}/>
             <FormFeedback>{this.state.loginError}</FormFeedback>
             </FormGroup>
             <Button color="primary" block onClick={this.handleLogin}>Sign In</Button>

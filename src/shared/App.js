@@ -3,9 +3,9 @@ import {renderRoutes} from 'react-router-config';
 import Topbar from './components/TopBar';
 import {routes} from './routes';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 import './App.css';
-// import 'mdbootstrap/css/bootstrap.min.css'
 
 const renderedRoutes = renderRoutes(routes);
 
@@ -24,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));
