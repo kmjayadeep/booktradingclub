@@ -4,14 +4,19 @@ services:
     build: .
     ports:
      - '3000:3000'
-    links:
-     - mongo
+    volumes:
+     - .:/usr/src/app
     depends_on:
      - mongo
     environment:
      - DB_URL=mongodb://mongo/booksharingapp
+    
   mongo:
     image: 'mongo'
-    command: '--smallfiles'
     ports:
       - "27017:27017"
+    volumes:
+      - data-volume:/data/db
+
+volumes:
+  data-volume:

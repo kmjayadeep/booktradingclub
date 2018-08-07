@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production webpack --mode production & NODE_ENV=production node bootstrap.js",
+    "start": "webpack && node bootstrap.js",
     "dev": "NODE_ENV=development webpack -w --mode development & NODE_ENV=development nodemon bootstrap.js",
     "server": "NODE_ENV=development nodemon bootstrap.js",
     "webpack": "NODE_ENV=development webpack -w --mode development",
