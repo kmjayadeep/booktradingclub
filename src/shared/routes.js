@@ -1,6 +1,6 @@
 import Home from './containers/Home';
 import Login from './containers/Login';
-// import Logout from './containers/Logout';
+import Logout from './containers/Logout';
 // import SignUp from './containers/Signup';
 import NotFound from './containers/NotFound';
 
@@ -16,11 +16,11 @@ export const routes = [
     component: Login,
     name: 'login'
   },
-  // {
-  //   path: '/logout',
-  //   component: Logout,
-  //   name: 'logout'
-  // },
+  {
+    path: '/logout',
+    component: Logout,
+    name: 'logout'
+  },
   // {
   //   path: '/signup',
   //   component: SignUp,
