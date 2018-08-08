@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default ({ icon }) => (
+const MaterialIcon = ({ icon }) => (
     <i className="material-icons">{icon}</i>
 );
+
+export default MaterialIcon;

@@ -1,7 +1,7 @@
 import Home from './containers/Home';
 import Login from './containers/Login';
 import Logout from './containers/Logout';
-// import SignUp from './containers/Signup';
+import SignUp from './containers/Signup';
 import NotFound from './containers/NotFound';
 
 export const routes = [
@@ -21,11 +21,11 @@ export const routes = [
     component: Logout,
     name: 'logout'
   },
-  // {
-  //   path: '/signup',
-  //   component: SignUp,
-  //   name: 'signup'
-  // },
+  {
+    path: '/signup',
+    component: SignUp,
+    name: 'signup'
+  },
   {
     component: NotFound,
     name: 'notfound'
