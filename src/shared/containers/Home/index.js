@@ -12,7 +12,10 @@ import {
   CardFooter
 } from 'reactstrap';
 
+import MaterialIcon from '../../components/MaterialIcon';
+
 import { loadBooks } from '../../redux/actions/book';
+import "./Books.css";
 
 const mapStateToProps = state => {
   return {
@@ -28,15 +31,19 @@ class Home extends Component {
     const { books } = this.props;
     return (
       <Container>
+        <h3 className="text-center">
+          Books
+          <small className="text-muted"> available for Trade</small>
+        </h3>
         <Row>
         {books.map(book => (
           <Col key={book._id}>
-            <Card>
+            <Card className="book-card text-center">
               <CardTitle>{book.title}</CardTitle>
               <CardSubtitle>{book.author}</CardSubtitle>
               <CardBody>
-                  <p>{book.owner.name}</p>
-                  <p>{book.owner.city}</p>
+                  <p><MaterialIcon icon="person"/>{book.owner.name}</p>
+                  <p><MaterialIcon icon="location_on"/>{book.owner.city}</p>
               </CardBody>
               <CardFooter>
                 <Button size="small" color="primary" variant="outlined">

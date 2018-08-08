@@ -26,7 +26,7 @@ export default class Topbar extends Component{
   render(){
     const {isAuth, user} = this.props;
     return (
-      <Navbar color="dark" dark expand="md">
+      <Navbar color="dark" dark expand="md" fixed="top">
         <Link to="/" className="navbar-brand">BookSharingApp</Link>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
