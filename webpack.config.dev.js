@@ -1,12 +1,17 @@
+const path = require('path');
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: 'production',
-  entry: "./src/browser/index.js",
+  mode: 'development',
+  entry: [
+    'webpack-hot-middleware/client',
+    './src/browser/index.js'
+  ],
   output: {
-    path: __dirname,
-    filename: "./public/bundle.js"
+    path: path.resolve(__dirname),
+    filename: "bundle.js",
+    publicPath: '/'
   },
   devtool: "cheap-module-source-map",
   module: {
@@ -44,8 +49,8 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "public/css/[name].css",
-      chunkFilename: "[id].css"
+      filename: "css/[name].css",
+      chunkFilename: "[id].css",
     }),
     new webpack.HotModuleReplacementPlugin()
   ]

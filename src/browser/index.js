@@ -18,3 +18,16 @@ hydrate(
   </Provider>,
   document.getElementById('app-root')
 );
+
+if(process.env.NODE_ENV == 'development' && module.hot) {
+  module.hot.accept('../shared/App', () => {
+      const NewApp = require('../shared/App').default;
+      hydrate(
+        <Provider store={store}>
+        <BrowserRouter>
+            <NewApp/>
+        </BrowserRouter>
+      </Provider>,
+      document.getElementById('app-root'));
+  });
+}

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack && node bootstrap.js",
     "dev": "NODE_ENV=development webpack -w --mode development & NODE_ENV=development nodemon bootstrap.js",
-    "server": "NODE_ENV=development nodemon bootstrap.js",
+    "server": "NODE_ENV=development node bootstrap.js",
     "webpack": "NODE_ENV=development webpack -w --mode development",
     "test": "mocha --require babel-core/register --require babel-polyfill src/server/tests/**/*.spec.js"
   },
@@ -54,6 +54,8 @@
     "mocha": "^5.2.0",
     "nodemon": "^1.17.5",
     "webpack": "^4.8.3",
-    "webpack-cli": "^2.1.3"
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-hot-middleware": "^2.22.3"
   }
 }

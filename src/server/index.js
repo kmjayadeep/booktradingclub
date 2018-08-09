@@ -38,6 +38,26 @@ passport.use(googleStrategy);
 app.use(validateAuthHeaders);
 app.use('/api', Routes);
 
+if(process.env.NODE_ENV !== 'production') {
+  
+  console.log('Starting webpack hot middleware')
+
+  var webpack = require('webpack');
+  var webpackConfig = require('../../webpack.config.dev');
+  var compiler = webpack(webpackConfig);
+
+  // console.log(webpackConfig)
+
+  // Step 2: Attach the dev middleware to the compiler & the server
+  app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+  }));
+
+  // Step 3: Attach the hot middleware to the compiler & the server
+  app.use(require("webpack-hot-middleware")(compiler));
+
+}
+
 app.use('*', async (req, res) => {
   const store = await configureStore(req);
   res.send(renderFullHtml(req.originalUrl, store));
