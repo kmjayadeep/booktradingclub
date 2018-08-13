@@ -46,13 +46,9 @@ export default class Topbar extends Component{
                 {user.name}
                 </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  <Link to="/profile">Profile</Link>
-                </DropdownItem>
+                <Link to="/profile" className="dropdown-item">Profile</Link>
                 <DropdownItem divider />
-                <DropdownItem>
-                  <Link to="/logout">Logout</Link>
-                </DropdownItem>
+                <Link to="/logout" className="dropdown-item">Logout</Link>
               </DropdownMenu>
             </UncontrolledDropdown>
            }
