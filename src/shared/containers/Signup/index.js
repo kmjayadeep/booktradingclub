@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 
 import { signupUser } from '../../redux/actions/auth';
+import timerPromise from '../../utils/timerPromise';
 
 class Signup extends Component {
 
@@ -25,6 +26,11 @@ class Signup extends Component {
   setLoading = loading => {
     this.setState({loading})
   }
+
+  setErrorMessage(message) {
+    this.setState({ signupError: message });
+  }
+
 
   handleChange = event => {
     this.setState({
@@ -40,9 +46,31 @@ class Signup extends Component {
     return true;
   };
 
+  handleSignup = async () => {
+    const { name, email, password, confirmPassword } = this.state;
+    const fields = {
+      name,
+      email,
+      password,
+      confirmPassword
+    };
+    if (!this.validateFields(fields)) return;
+    try {
+      await this.props.signupUser(fields);
+      this.setState({ signupSuccess: true });
+      await timerPromise(2000);
+      this.setState({ redirectLogin: true });
+    } catch (err) {
+      this.setErrorMessage(err.message);
+    }
+  };
+
   render() {
     if (this.props.isAuth) {
       return <Redirect to="/" />;
+    }
+    if (this.state.redirectLogin) {
+      return <Redirect to="/login" />;
     }
     return (
       <Container>
