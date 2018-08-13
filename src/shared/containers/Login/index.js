@@ -61,13 +61,12 @@ class Login extends Component {
     }
     return (
       <Container>
-        <Card id="login-card">
-
+        <Card id="auth-card">
           <CardImg top width="100%" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
           <CardBody>
             <CardTitle>Login</CardTitle>
             <CardSubtitle>To access thousands of books around you</CardSubtitle>
-            <Form id="login-form">
+            <Form id="auth-form">
               <WarningMessage message={this.state.loginError} />
               <Input type="email" name="email" id="inputEmail" placeholder="Email Address" required onChange={this.handleChange} />
               <FormGroup>

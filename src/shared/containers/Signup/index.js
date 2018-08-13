@@ -17,7 +17,7 @@ import {
 import { signupUser } from '../../redux/actions/auth';
 import timerPromise from '../../utils/timerPromise';
 
-import './Signup.css';
+import '../Login/Login.css';
 
 class Signup extends Component {
 
@@ -79,7 +79,7 @@ class Signup extends Component {
     const signupMessage = 'Signup Successful. You will be redirected to Login'
     return (
       <Container>
-        <Card id="login-card">
+        <Card id="auth-card">
           <CardImg top width="100%" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
           <CardBody>
             <CardTitle>Sign Up</CardTitle>
@@ -90,12 +90,12 @@ class Signup extends Component {
               message={this.state.signupSuccess ? signupMessage : ''}
             />
             {this.state.signupSuccess ||
-              <Form id="login-form">
+              <Form id="auth-form">
                 <AlertMessage message={this.state.signupError} />
                 <Input name="name" id="inputName" placeholder="Name" required onChange={this.handleChange} />
                 <Input type="email" name="email" id="inputEmail" placeholder="Email Address" required onChange={this.handleChange} />
-                <Input type="password" name="password" id="inputPassword" placeholder="Password" required onChange={this.handleChange} invalid={this.state.loginError != null} />
-                <Input type="password" name="confirmPassword" id="inputConfirmPassword" placeholder="Confirm Password" required onChange={this.handleChange} invalid={this.state.loginError != null} />
+                <Input type="password" name="password" id="inputPassword" placeholder="Password" required onChange={this.handleChange}/>
+                <Input type="password" name="confirmPassword" id="inputConfirmPassword" placeholder="Confirm Password" required onChange={this.handleChange} />
                 <Button color="primary" block onClick={this.handleSignup}>Sign Up</Button>
               </Form>
             }
