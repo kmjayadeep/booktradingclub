@@ -1,33 +1,18 @@
-import React from 'react';
-import { hydrate } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { configureStore } from './store';
-import App from '../shared/App';
+// index.js
+import { h, render } from 'preact'
+// import { Provider } from 'unistore/preact'
+import Router from '../shared/router'
 
-const preloadedState = window.__PRELOADED_STATE__;
-delete window.__PRELOADED_STATE__;
+// import createStore from './store/store'
 
-const store = configureStore(preloadedState);
+// const store = createStore(window.__STATE__)
 
-hydrate(
-  <Provider store={store}>
-    <BrowserRouter>
-        <App/>
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('app-root')
-);
+const app = document.getElementById('app-root')
 
-if(process.env.NODE_ENV == 'development' && module.hot) {
-  module.hot.accept('../shared/App', () => {
-      const NewApp = require('../shared/App').default;
-      hydrate(
-        <Provider store={store}>
-        <BrowserRouter>
-            <NewApp/>
-        </BrowserRouter>
-      </Provider>,
-      document.getElementById('app-root'));
-  });
-}
+render(
+    // <Provider store={store}>
+        <Router />,
+    // </Provider>,
+    app,
+    app.lastChild
+)

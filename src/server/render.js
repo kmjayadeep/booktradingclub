@@ -1,32 +1,31 @@
-import React from 'react';
+// import React from 'react';
 import serialize from 'serialize-javascript';
-import {renderToString} from 'react-dom/server';
-import {StaticRouter} from 'react-router-dom';
-import {Provider} from 'react-redux';
+// import {renderToString} from 'react-dom/server';
+// import {StaticRouter} from 'react-router-dom';
+// import {Provider} from 'react-redux';
 
-import App from '../shared/App';
+import { h } from 'preact';
+import { render } from 'preact-render-to-string';
+import Router from '../shared/router';
 
-function renderMarkup(url, store, context) {
-  const markup = renderToString(
-    <Provider store={store}>
-      <StaticRouter location={url} context={context}>
-        <App/>
-      </StaticRouter>
-    </Provider>
-  );
-  return markup;
+// import App from '../shared/App';
+
+function renderMarkup(url, store) {
+  let html = render(
+    <Router />
+  )
+  return html;
 }
 
 export function renderFullHtml(url, store) {
-  const context = {};
-  const markup = renderMarkup(url, store, context);
-  const preloadedState = store.getState();
+  const markup = renderMarkup(url, store);
+  // const preloadedState = store.getState();
+  const preloadedState = {test:'hello'};
   const serializedState = serialize(preloadedState);
   return `
     <html>
         <head>
             <title>BookSharingApp</title>
-            <link rel="stylesheet" href="/css/main.css">
         </head>
         <body>
             <div id="app-root">${markup}</div>

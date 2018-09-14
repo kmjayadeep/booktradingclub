@@ -1,0 +1,15 @@
+{
+    "plugins": [
+        ["transform-react-jsx", {
+            "pragma": "h"
+        }]
+    ],
+    "presets": [
+        ["es2015", {
+            "targets": {
+                "node": "current",
+                "browsers": ["last 2 versions"]
+            }
+        }]
+    ]
+}

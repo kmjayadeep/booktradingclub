@@ -1,27 +1,27 @@
-import { createStore } from 'redux';
-import { loginSuccess } from '../shared/redux/actions/auth';
-import { setBooks } from '../shared/redux/actions/book';
-import reducer from '../shared/redux/reducer';
-import { matchPath } from 'react-router-dom';
-import { routes } from '../shared/routes';
-import { getAllActiveBooks } from './controllers/BookController';
+// import { createStore } from 'redux';
+// import { loginSuccess } from '../shared/redux/actions/auth';
+// import { setBooks } from '../shared/redux/actions/book';
+// import reducer from '../shared/redux/reducer';
+// import { matchPath } from 'react-router-dom';
+// import { routes } from '../shared/routes';
+// import { getAllActiveBooks } from './controllers/BookController';
 
 export const configureStore = async req => {
-  const store = createStore(reducer);
-  if (req.user) {
-    const { name, email } = req.user;
-    store.dispatch(loginSuccess({ name, email }));
-  }
-  let url = req.baseUrl + req.path;
-  url = url.replace(/\/$/, '');
-  const matchedRoutes = routes.filter(route => {
-    return matchPath(url, route);
-  });
-  for (let route of matchedRoutes) {
-    if (route.name == 'home') {
-      const books = await getAllActiveBooks();
-      store.dispatch(setBooks(books));
-    }
-  }
-  return store;
+  // const store = createStore(reducer);
+  // if (req.user) {
+  //   const { name, email } = req.user;
+  //   store.dispatch(loginSuccess({ name, email }));
+  // }
+  // let url = req.baseUrl + req.path;
+  // url = url.replace(/\/$/, '');
+  // const matchedRoutes = routes.filter(route => {
+  //   return matchPath(url, route);
+  // });
+  // for (let route of matchedRoutes) {
+  //   if (route.name == 'home') {
+  //     const books = await getAllActiveBooks();
+  //     store.dispatch(setBooks(books));
+  //   }
+  // }
+  // return store;
 };

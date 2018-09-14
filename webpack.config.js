@@ -1,52 +1,30 @@
-const webpack = require("webpack");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
+const nodeExternals = require('webpack-node-externals');
 
-module.exports = {
-  mode: 'production',
-  entry: "./src/browser/index.js",
-  output: {
-    path: __dirname,
-    filename: "./public/bundle.js"
-  },
-  devtool: "cheap-module-source-map",
-  module: {
-    rules: [{
-        test: [/\.(jpe?g|png)$/],
-        loader: "file-loader",
-        options: {
-          name: "public/media/[name].[ext]",
-          publicPath: url => url.replace(/public/, "")
-        }
-      },
-      {
-        test: /.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: 'public/fonts/[name].[ext]',
-            publicPath: url => url.replace(/public/, "")
-          }
+module.exports = [{
+    entry: "./src/browser/index.js",
+    output: {
+        path: path.join(__dirname, "public"),
+        filename: "bundle.js"
+    },
+    module: {
+        rules: [{
+            test: /\.js$/,
+            loader: "babel-loader",
         }]
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules)/,
-        loader: "babel-loader",
-        query: {
-          presets: ["react-app"]
-        }
-      }
-    ]
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "public/css/[name].css",
-      chunkFilename: "[id].css"
-    }),
-    new webpack.HotModuleReplacementPlugin()
-  ]
-};
+    }
+}, {
+    entry: "./src/server/index.js",
+    output: {
+        path: __dirname,
+        filename: "server.js"
+    },
+    externals: [nodeExternals()],
+    module: {
+        rules: [{
+            test: /\.js$/,
+            loader: "babel-loader",
+            exclude: /node_modules/
+        }]
+    }
+}];
