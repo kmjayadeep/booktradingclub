@@ -1,28 +1,8 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import { connect } from 'react-redux';
-import {
-  Alert,
-  Button,
-  Form,
-  Input,
-  Card,
-  CardBody,
-  CardImg,
-  Container,
-  CardTitle,
-  CardSubtitle,
-  FormFeedback,
-  FormGroup
-} from 'reactstrap';
+import {h, Component } from 'preact';
 
 import { loginUser } from '../../redux/actions/auth';
 
-import "./Login.css";
-
-const mapStateToProps = state => {
-  return state.authUser;
-};
+import styles from  "./Login.css";
 
 class Login extends Component {
 
@@ -40,7 +20,7 @@ class Login extends Component {
     const credentials = { email, password };
     this.setLoading(true);
     try {
-      await this.props.loginUser(credentials);
+      await loginUser(credentials);
     } catch (err) {
       this.setState({
         loginError: err.message
@@ -50,38 +30,36 @@ class Login extends Component {
   };
 
   handleChange = event => {
+    console.log(this.state)
     this.setState({
       [event.target.name]: event.target.value
     });
   };
 
-  render() {
-    if (this.props.isAuth) {
-      return <Redirect to="/" />;
-    }
+  render({isAuth},{handleChange, handleLogin, loginError}) {
     return (
-      <Container>
-        <Card id="auth-card">
-          <CardImg top width="100%" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-          <CardBody>
-            <CardTitle>Login</CardTitle>
-            <CardSubtitle>To access thousands of books around you</CardSubtitle>
-            <Form id="auth-form">
-              <WarningMessage message={this.state.loginError} />
-              <Input type="email" name="email" id="inputEmail" placeholder="Email Address" required onChange={this.handleChange} />
-              <FormGroup>
-                <Input type="password" name="password" id="inputPassword" placeholder="Password" required onChange={this.handleChange} invalid="true" />
-              </FormGroup>
-              <Button color="primary" block onClick={this.handleLogin}>Sign In</Button>
-            </Form>
-          </CardBody>
-        </Card>
-      </Container>
+      <div class="container">
+        <div class="card" id={styles.auth_card}>
+          <img class="card-img-top" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
+          <div class="card-body">
+            <h5 class="card-title">Login</h5>
+            <div class="card-subtitle">To access thousands of books around you</div>
+            <form id={styles.auth_form}>
+               <WarningMessage message={loginError} />
+               <div class="form-group">
+               <input class="form-control" type="email" name="email"  placeholder="Email Address" required onChange={handleChange} />
+                 <input class="form-control" type="password" name="password" id="inputPassword" placeholder="Password" required onChange={handleChange} />
+               </div>
+               <button class="btn btn-primary btn-block" onClick={handleLogin}>Sign In</button>
+            </form>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default Login;
 
 const WarningMessage = ({ message }) => (
   message && 
