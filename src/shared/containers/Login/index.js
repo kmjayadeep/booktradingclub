@@ -15,7 +15,8 @@ class Login extends Component {
     this.setState({ loading })
   }
 
-  handleLogin = async () => {
+  handleLogin = async (e) => {
+    e.preventDefault();
     const { email, password } = this.state;
     const credentials = { email, password };
     this.setLoading(true);
@@ -30,7 +31,6 @@ class Login extends Component {
   };
 
   handleChange = event => {
-    console.log(this.state)
     this.setState({
       [event.target.name]: event.target.value
     });

@@ -29,6 +29,7 @@ class Signup extends Component {
   };
 
   validateFields = fields => {
+    console.log(fields)
     if (!fields.name || !fields.email || !fields.password)
       return this.setErrorMessage('All fields are required');
     if (fields.password !== fields.confirmPassword)
@@ -36,7 +37,8 @@ class Signup extends Component {
     return true;
   };
 
-  handleSignup = async () => {
+  handleSignup = async (e) => {
+    e.preventDefault();
     this.setErrorMessage(null);
     const { name, email, password, confirmPassword } = this.state;
     const fields = {
