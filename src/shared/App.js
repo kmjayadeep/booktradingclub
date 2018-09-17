@@ -4,4 +4,8 @@ import { h } from 'preact'
 
 // import { actions } from './store/store'
 
-export const App = ()=>(<h1>Hello world</h1>)
+import './App.css';
+
+import Topbar from './components/TopBar'
+
+export const App = ()=>(<Topbar/>)

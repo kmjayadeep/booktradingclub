@@ -26,6 +26,7 @@ export function renderFullHtml(url, store) {
     <html>
         <head>
             <title>BookSharingApp</title>
+            <link rel="stylesheet" href="/style.css"/>
         </head>
         <body>
             <div id="app-root">${markup}</div>
