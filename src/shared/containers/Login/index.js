@@ -36,7 +36,7 @@ class Login extends Component {
     });
   };
 
-  render({isAuth},{handleChange, handleLogin, loginError}) {
+  render({isAuth},{loginError}) {
     return (
       <div class="container">
         <div class="card" id={styles.auth_card}>
@@ -47,10 +47,10 @@ class Login extends Component {
             <form id={styles.auth_form}>
                <WarningMessage message={loginError} />
                <div class="form-group">
-               <input class="form-control" type="email" name="email"  placeholder="Email Address" required onChange={handleChange} />
-                 <input class="form-control" type="password" name="password" id="inputPassword" placeholder="Password" required onChange={handleChange} />
+               <input class="form-control" type="email" name="email"  placeholder="Email Address" required onChange={this.handleChange} />
+                 <input class="form-control" type="password" name="password" id="inputPassword" placeholder="Password" required onChange={this.handleChange} />
                </div>
-               <button class="btn btn-primary btn-block" onClick={handleLogin}>Sign In</button>
+               <button class="btn btn-primary btn-block" onClick={this.handleLogin}>Sign In</button>
             </form>
           </div>
         </div>

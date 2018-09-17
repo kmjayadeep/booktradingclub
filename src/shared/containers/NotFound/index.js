@@ -1,21 +1,18 @@
-import React, { Component } from 'react';
-import { Container, Row, Col, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { h, Component } from 'preact';
+import { Link } from 'preact-router';
 
-import "./NotFound.css";
+import styles from "./NotFound.css";
 
 class NotFound extends Component {
   render() {
     return (
-      <Container className="pad-top">
-        <Row>
-          <Col className="text-center">
-            <span className="display-1 d-block">404</span>
-            <div className="mb-4 lead">The page you are looking for was not found.</div>
-            <Button><Link to="/">Back to Home</Link></Button>
-          </Col>
-        </Row>
-      </Container>
+      <div class={styles.pad_top+' container'}>
+          <div class="text-center">
+            <span class="display-1 d-block">404</span>
+            <div class="mb-4 lead">The page you are looking for was not found.</div>
+            <button class="btn btn-primary"><Link to="/">Back to Home</Link></button>
+          </div>
+      </div>
     );
   }
 }
