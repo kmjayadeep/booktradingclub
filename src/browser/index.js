@@ -1,18 +1,16 @@
 // index.js
 import { h, render } from 'preact'
-// import { Provider } from 'unistore/preact'
+import { Provider } from 'unistore/preact'
 import Router from '../shared/router'
 
-// import createStore from './store/store'
-
-// const store = createStore(window.__STATE__)
+import store from '../shared/store/store';
 
 const app = document.getElementById('app-root')
 
 render(
-    // <Provider store={store}>
+    <Provider store={store}>
         <Router />,
-    // </Provider>,
+    </Provider>,
     app,
     app.lastChild
 )

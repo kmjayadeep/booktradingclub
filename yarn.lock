@@ -6046,6 +6046,10 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
+unistore@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/unistore/-/unistore-3.0.6.tgz#e3abefaca0184bd932e4818fb20b771aafdd6dcb"
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"

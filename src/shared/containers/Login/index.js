@@ -1,6 +1,7 @@
 import {h, Component } from 'preact';
+import { connect } from 'unistore/preact';
+import actions from '../../store/actions/auth';
 
-import { loginUser } from '../../redux/actions/auth';
 
 import styles from  "./Login.css";
 
@@ -21,7 +22,7 @@ class Login extends Component {
     const credentials = { email, password };
     this.setLoading(true);
     try {
-      await loginUser(credentials);
+      await this.props.loginUser(credentials);
     } catch (err) {
       this.setState({
         loginError: err.message
@@ -59,11 +60,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect('isAuth,user',actions)(Login);
 
 const WarningMessage = ({ message }) => (
   message && 
-  <Alert color="warning">
+  <div class="alert alert-warning">
     {message}
-  </Alert>
+  </div>
 );
