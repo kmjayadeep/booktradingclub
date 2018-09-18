@@ -10,6 +10,7 @@ import Routes from './routes';
 import config from './config';
 import { renderFullHtml } from './render';
 import { validateAuthHeaders } from './middlewares/auth';
+import { getAllActiveBooks } from './controllers/BookController';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -37,6 +38,14 @@ passport.use(googleStrategy);
 
 app.use(validateAuthHeaders);
 app.use('/api', Routes);
+
+app.get('/', async (req, res) => {
+  const store = await configureStore(req);
+  store.setState({
+    books: await getAllActiveBooks()
+  })
+  res.send(renderFullHtml(req.originalUrl, store));
+});
 
 app.use('*', async (req, res) => {
   const store = await configureStore(req);

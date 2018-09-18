@@ -1,68 +1,46 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {
-  Row,
-  Col,
-  Container,
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button,
-  CardFooter
-} from 'reactstrap';
+import { h, Component } from 'preact';
+import { connect } from 'unistore/preact';
 
-import MaterialIcon from '../../components/MaterialIcon';
+import actions from '../../store/actions/book';
 
-import { loadBooks } from '../../redux/actions/book';
-import "./Books.css";
-
-const mapStateToProps = state => {
-  return {
-    books: state.book.books
-  };
-};
+import styles from "./Books.css";
 
 class Home extends Component {
   componentDidMount() {
     if (this.props.books.length == 0) this.props.loadBooks();
   }
-  render() {
-    const { books } = this.props;
+  render({ books }) {
     return (
-      <Container>
-        <h3 className="text-center">
+      <div class="container">
+        <h3 class="text-center">
           Books
-          <small className="text-muted"> available for Trade</small>
+          <small class="text-muted"> available for Trade</small>
         </h3>
-        <Row>
+        <div class="container row">
         {books.map(book => (
-          <Col key={book._id}>
-            <Card className="book-card text-center">
-              <CardTitle>{book.title}</CardTitle>
-              <CardSubtitle>{book.author}</CardSubtitle>
-              <CardBody>
-                  <p><MaterialIcon icon="person"/>{book.owner.name}</p>
-                  <p><MaterialIcon icon="location_on"/>{book.owner.city}</p>
-              </CardBody>
-              <CardFooter>
-                <Button size="small" color="primary" variant="outlined">
+          <div class="col">
+            <div class={styles.book_card+' card text-center'}>
+              <div class="card-title">{book.title}</div>
+              <div class="card-subtitle">{book.author}</div>
+              <div class="card-body">
+                  <p><div icon="person"/>{book.owner.name}</p>
+                  <p><div icon="location_on"/>{book.owner.city}</p>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-primary btn-small">
                   Request
-                </Button>
-                <Button size="small" variant="outlined">
+                </button>
+                <button class="btn">
                   View Details
-                </Button>
-              </CardFooter>
-            </Card>
-          </Col>
+                </button>
+              </div>
+            </div>
+          </div>
         ))}
-        </Row>
-      </Container>
+        </div>
+      </div>
     );
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { loadBooks }
-)(Home);
+export default connect('books', actions)(Home);

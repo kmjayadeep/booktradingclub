@@ -3,7 +3,8 @@ import createStore from 'unistore';
 export default async req => {
   const store = createStore({
     isAuth: false,
-    user: null
+    user: null,
+    books: []
   })
   if(req.user)
     store.setState({
