@@ -1,26 +1,21 @@
-// import React from 'react';
-import serialize from 'serialize-javascript';
-// import {renderToString} from 'react-dom/server';
-// import {StaticRouter} from 'react-router-dom';
-// import {Provider} from 'react-redux';
-
 import { h } from 'preact';
+import serialize from 'serialize-javascript';
+import { Provider } from 'unistore/preact';
 import { render } from 'preact-render-to-string';
 import Router from '../shared/router';
 
-// import App from '../shared/App';
-
 function renderMarkup(url, store) {
   let html = render(
-    <Router />
+    <Provider store={store}>
+      <Router url={url}/>
+    </Provider>
   )
   return html;
 }
 
 export function renderFullHtml(url, store) {
   const markup = renderMarkup(url, store);
-  // const preloadedState = store.getState();
-  const preloadedState = {test:'hello'};
+  const preloadedState = store.getState();
   const serializedState = serialize(preloadedState);
   return `
     <html>

@@ -8,10 +8,11 @@ import Login from './containers/Login';
 import Signup from './containers/Signup';
 import NotFound from './containers/NotFound';
 
-export default () => (
+//url is only used in server
+export default ({url}) => (
     <div>
         <Topbar/>
-        <Router>
+        <Router url={url}>
             <Login path="/login"/>
             <Signup path="/signup"/>
             <NotFound default/>
