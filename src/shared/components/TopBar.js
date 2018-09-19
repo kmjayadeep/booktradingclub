@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router'
-export default class Topbar extends Component{
+import { connect } from 'unistore/preact';
+class Topbar extends Component{
   state = {
     isOpen: false
   }
@@ -9,34 +10,46 @@ export default class Topbar extends Component{
       isOpen: !this.state.isOpen
     });
   }
-  render({isAuth, user}){
+  render({ isAuth, user },{ isOpen }){
+    const showClass = isOpen ? 'show' : ''
     return (
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <div class={`navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2 ${showClass}`}>
           <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                  <a class="nav-link" href="#">All Books</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Users</a>
-              </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">All Books</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Users</a>
+            </li>
           </ul>
         </div>
         <div class="mx-auto order-0">
-            <Link class="navbar-brand mx-auto" href="/">BookSharingApp</Link>
-            <button class="navbar-toggler" type="button" onClick={this.toggle}>
-                <span class="navbar-toggler-icon"></span>
-            </button>
+          <Link class="navbar-brand mx-auto" href="/">BookSharingApp</Link>
+          <button class="navbar-toggler" type="button" onClick={this.toggle}>
+            <span class="navbar-toggler-icon"></span>
+          </button>
         </div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <div class={`navbar-collapse collapse w-100 order-3 dual-collapse2 ${showClass}`}>
+          {isAuth ?
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <Link to="/login" class="nav-link" href="/login" to="/login">Login</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/login" class="nav-link" href="/signup" to="/signup">Signup</Link>
-                </li>
+              <li class="nav-item">
+                <Link to="/profile" class="nav-link" href="/profile">{user.name}</Link>
+              </li>
+              <li class="nav-item">
+                <Link to="/logout" class="nav-link" href="/logout">Logout</Link>
+              </li>
             </ul>
+          :
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <Link to="/login" class="nav-link" href="/login" to="/login">Login</Link>
+              </li>
+              <li class="nav-item">
+              <Link to="/login" class="nav-link" href="/signup" to="/signup">Signup</Link>
+              </li>
+            </ul>
+          }
         </div>
       </nav>
     )
@@ -73,3 +86,5 @@ export default class Topbar extends Component{
     // )
   }
 }
+
+export default connect('isAuth,user')(Topbar);
