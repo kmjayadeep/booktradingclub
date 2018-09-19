@@ -23,7 +23,7 @@ class Topbar extends Component{
     const showClass = isOpen ? 'show' : ''
     const showDropdown = dropdown ? 'show' : ''
     return (
-      <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary">
         <div class={`navbar-collapse collapse order-1 order-md-0 dual-collapse2 ${showClass} ${styles.flex_1}`}>
           <ul class="navbar-nav align-items-center">
             <li class="nav-item">
