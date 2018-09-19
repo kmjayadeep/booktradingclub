@@ -1,5 +1,25 @@
-.book_card{
+.card{
     min-width: 300px;
     padding-top:20px;
     margin: 10px;
+}
+.body{
+    display: inline-flex;
+    flex-direction: column;
+}
+.owner{
+    display: inline-flex;
+    align-items: center;
+}
+.owner:first-child{
+    margin-bottom: 0.7em;
+}
+.owner p{
+    margin: 0;
+}
+.person i{
+    color: #206ba5;
+}
+.location i{
+    color: #dd556c;
 }

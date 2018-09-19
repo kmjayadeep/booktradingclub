@@ -1,11 +1,7 @@
 import { h, Component } from 'preact';
 import { connect } from 'unistore/preact';
-
-import MaterialIcon from '../../components/MaterialIcon';
-
 import actions from '../../store/actions/book';
-
-import styles from "./Books.css";
+import Book from './Book';
 
 class Home extends Component {
   componentDidMount() {
@@ -20,24 +16,7 @@ class Home extends Component {
         </h3>
         <div class="container row">
         {books.map(book => (
-          <div class="col">
-            <div class={styles.book_card+' card text-center'}>
-              <h5 class="card-title">{book.title}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{book.author}</h6>
-              <div class="card-body">
-                  <p><MaterialIcon icon="person"/>{book.owner.name}</p>
-                  <p><MaterialIcon icon="location_on"/>{book.owner.city}</p>
-              </div>
-              <div class="card-footer">
-                <button class="btn btn-primary btn-small">
-                  Request
-                </button>
-                <button class="btn">
-                  View Details
-                </button>
-              </div>
-            </div>
-          </div>
+          <Book book={book}/>
         ))}
         </div>
       </div>
