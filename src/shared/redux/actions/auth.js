@@ -15,12 +15,6 @@ export function signupUser(userData) {
   };
 }
 
-export function logoutUser() {
-  return async dispatch => {
-    await logout();
-    dispatch(loginReset());
-  };
-}
 
 export function loginSuccess(user) {
   return {

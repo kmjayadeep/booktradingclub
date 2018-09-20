@@ -47,6 +47,18 @@ app.get('/', async (req, res) => {
   res.send(renderFullHtml(req.originalUrl, store));
 });
 
+app.get('/login|signup', async (req,res)=>{
+  if(req.user)
+    return res.redirect('/');
+  const store = await configureStore(req);
+  res.send(renderFullHtml(req.originalUrl, store));
+})
+
+app.get('/logout', async (req,res)=>{
+  res.clearCookie('token');
+  return res.redirect('/');
+})
+
 app.use('*', async (req, res) => {
   const store = await configureStore(req);
   res.send(renderFullHtml(req.originalUrl, store));

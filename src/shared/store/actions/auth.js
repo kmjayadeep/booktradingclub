@@ -14,19 +14,22 @@ export async function loginUser(state, credentials) {
   }
 }
 
+//TODO
 export function signupUser(userData) {
   return async dispatch => {
     await signup(userData);
   };
 }
 
-export function logoutUser() {
-  return async dispatch => {
-    await logout();
-    dispatch(loginReset());
-  };
+export async function logoutUser() {
+  await logout();
+  return {
+    user: null,
+    isAuth: false
+  }
 }
 
 export default store => ({
-  loginUser
+  loginUser,
+  logoutUser
 })

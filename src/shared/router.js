@@ -7,6 +7,7 @@ import './App.css';
 import Home from './containers/Home';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
+import Logout from './containers/Logout';
 import NotFound from './containers/NotFound';
 
 //url is only used in server
@@ -17,6 +18,7 @@ export default ({url}) => (
             <Home path="/"/>
             <Login path="/login"/>
             <Signup path="/signup"/>
+            <Logout path="/logout"/>
             <NotFound default/>
         </Router>
     </div>

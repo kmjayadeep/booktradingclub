@@ -1,41 +1,28 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+import { h, Component } from 'preact';
+import { connect } from 'unistore/preact';
+import { route } from 'preact-router';
 
-import { logoutUser } from '../../redux/actions/auth';
+import actions from '../../store/actions/auth';
 
-const mapStateToProps = state => {
-  return {
-    isAuth: state.authUser.isAuth
-  };
-};
+import styles from './Logout.css';
 
 class Logout extends Component {
   componentDidMount() {
     this.props.logoutUser();
   }
-  render() {
-    if (!this.props.isAuth) return <Redirect to="/" />;
+  render({ isAuth }) {
+    isAuth || route('/');
     return (
-      <Container className="pad-top">
-        <Row>
-          <Col className="text-center">
+      <div class={`container ${styles.pad_top}`}>
+        <div class="row">
+          <div class="col text-center">
             <h3>Logging out</h3>
-            <div className="mb-4 lead">Please Wait..</div>
-          </Col>
-        </Row>
-      </Container>
+            <div class="mb-4 lead">Please Wait..</div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
-const ConnectedComponent = connect(
-  mapStateToProps,
-  { logoutUser }
-)(Logout);
-export default ConnectedComponent;
+export default connect('isAuth', actions)(Logout);

@@ -1,11 +1,17 @@
-import {h, Component } from 'preact';
+import { h, Component } from 'preact';
 import { connect } from 'unistore/preact';
+import { route } from 'preact-router';
 import actions from '../../store/actions/auth';
 
 
 import styles from  "./Login.css";
 
 class Login extends Component {
+
+  constructor(props){
+    super(props);
+    props.isAuth && route('/')
+  }
 
   state = {
     loginError: null,
@@ -38,6 +44,7 @@ class Login extends Component {
   };
 
   render({isAuth},{loginError}) {
+    isAuth && route('/'); //redirect if already logged
     return (
       <div class="container">
         <div class="card" id={styles.auth_card}>
