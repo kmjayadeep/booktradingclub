@@ -12,7 +12,7 @@ import {
 import { requiresAuth } from '../middlewares/auth';
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/active', async (req, res) => {
   try {
     const books = await getAllActiveBooks();
     res.json(books);

@@ -2,14 +2,20 @@ import createStore from 'unistore';
 
 export default async req => {
   const store = createStore({
-    isAuth: false,
-    user: null,
-    books: []
+    auth: {
+      user: null,
+      isAuth: false
+    },
+    activeBooks:{
+      data: []
+    }
   })
-  if(req.user)
+  if (req.user)
     store.setState({
-      isAuth: true,
-      user: req.user
+      auth: {
+        isAuth: true,
+        user: req.user
+      }
     })
   return store;
 };

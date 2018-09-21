@@ -9,8 +9,10 @@ export async function loginUser(state, credentials) {
     user
   } = await login(credentials);
   return {
-    user,
-    isAuth: true
+    auth: {
+      user,
+      isAuth: true
+    }
   }
 }
 
@@ -22,8 +24,10 @@ export async function signupUser(state, userData) {
 export async function logoutUser() {
   await logout();
   return {
-    user: null,
-    isAuth: false
+    auth: {
+      user: null,
+      isAuth: false
+    }
   }
 }
 

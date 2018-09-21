@@ -5,9 +5,9 @@ import Book from './Book';
 
 class Home extends Component {
   componentDidMount() {
-    if (this.props.books.length == 0) this.props.loadBooks();
+    if (this.props.activeBooks.data.length == 0) this.props.loadActiveBooks();
   }
-  render({ books }) {
+  render({ activeBooks }) {
     return (
       <div class="container">
         <h3 class="text-center">
@@ -15,7 +15,7 @@ class Home extends Component {
           <small class="text-muted"> available for Trade</small>
         </h3>
         <div class="container row">
-        {books.map(book => (
+        {activeBooks.data.map(book => (
           <Book book={book}/>
         ))}
         </div>
@@ -24,4 +24,4 @@ class Home extends Component {
   }
 }
 
-export default connect('books', actions)(Home);
+export default connect('activeBooks', actions)(Home);

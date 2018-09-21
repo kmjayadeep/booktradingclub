@@ -58,8 +58,8 @@ class Signup extends Component {
     }
   };
 
-  render({ isAuth },{ signupError }) {
-    if(isAuth)
+  render({ auth },{ signupError }) {
+    if(auth.isAuth)
       return <Redirect to="/login" />
     return (
       <div class="container">
@@ -98,4 +98,4 @@ const AlertMessage = ({ message, className , type}) => {
   )
 };
 
-export default connect('isAuth', actions)(Signup);
+export default connect('auth', actions)(Signup);

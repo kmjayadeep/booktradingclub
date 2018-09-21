@@ -19,7 +19,7 @@ class Topbar extends Component{
       dropdown: !this.state.dropdown
     })
   }
-  render({ isAuth, user },{ isOpen, dropdown }){
+  render({ auth },{ isOpen, dropdown }){
     const showClass = isOpen ? 'show' : ''
     const showDropdown = dropdown ? 'show' : ''
     return (
@@ -41,14 +41,14 @@ class Topbar extends Component{
           <Link class={`navbar-brand ${styles.booksharing_brand}`} href="/">BookSharingApp</Link>
         </div>
         <div class={`navbar-collapse collapse order-2 dual-collapse2 ${showClass} ${styles.flex_1}`}>
-          {isAuth ?
+          {auth.isAuth ?
             <ul class="navbar-nav justify-content-end align-items-center w-100">
               <li class="nav-item">
                 <Link to="/mybooks" class="nav-link" href="/mybooks">My Books</Link>
               </li>
               <li class="nav-item dropdown d-none d-md-block">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" onClick={this.dropDown}>
-                {user.name}
+                {auth.user.name}
                 </a>
                 <div class={`dropdown-menu ${showDropdown}`} aria-labelledby="navbarDropdown">
                   <Link href="/profile" class="dropdown-item">Profile</Link>
@@ -56,7 +56,7 @@ class Topbar extends Component{
                 </div>
               </li>
               <li class="nav-item d-block d-md-none">
-                <Link to="/profile" class="nav-link" href="/profile">{user.name}</Link>
+                <Link to="/profile" class="nav-link" href="/profile">{auth.user.name}</Link>
               </li>
               <li class="nav-item d-block d-md-none">
                 <Link to="/profile" class="nav-link" href="/logout">Logout</Link>
@@ -78,4 +78,4 @@ class Topbar extends Component{
   }
 }
 
-export default connect('isAuth,user')(Topbar);
+export default connect('auth')(Topbar);

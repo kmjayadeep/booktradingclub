@@ -39,8 +39,8 @@ class Login extends Component {
     });
   };
 
-  render({isAuth},{loginError}) {
-    if(isAuth)
+  render({auth},{loginError}) {
+    if(auth.isAuth)
       return <Redirect to="/"/>; //redirect if already logged
     return (
       <div class="container">
@@ -64,7 +64,7 @@ class Login extends Component {
   }
 }
 
-export default connect('isAuth,user',actions)(Login);
+export default connect('auth', actions)(Login);
 
 const WarningMessage = ({ message }) => (
   message && 

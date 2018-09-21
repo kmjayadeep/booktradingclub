@@ -42,7 +42,9 @@ app.use('/api', Routes);
 app.get('/', async (req, res) => {
   const store = await configureStore(req);
   store.setState({
-    books: await getAllActiveBooks()
+    activeBooks: {
+      data: await getAllActiveBooks()
+    }
   })
   res.send(renderFullHtml(req.originalUrl, store));
 });

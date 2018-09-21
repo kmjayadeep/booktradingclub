@@ -10,8 +10,8 @@ class Logout extends Component {
   componentDidMount() {
     this.props.logoutUser();
   }
-  render({ isAuth }) {
-    if(isAuth)
+  render({ auth }) {
+    if(auth.isAuth)
       return <Redirect to="/" />
     return (
       <div class={`container ${styles.pad_top}`}>
@@ -26,4 +26,4 @@ class Logout extends Component {
   }
 }
 
-export default connect('isAuth', actions)(Logout);
+export default connect('auth', actions)(Logout);

@@ -1,14 +1,16 @@
 import {
-    getBooks
+    getActiveBooks
 } from '../../api/book';
 
-export async function loadBooks(state) {
-    const books = await getBooks();
+export async function loadActiveBooks(state) {
+    const data = await getActiveBooks();
     return {
-        books
+        activeBooks:{
+            data
+        }
     };
 }
 
 export default store => ({
-    loadBooks
+    loadActiveBooks
 })
