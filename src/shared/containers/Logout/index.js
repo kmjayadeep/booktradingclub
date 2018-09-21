@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { connect } from 'unistore/preact';
 import { route } from 'preact-router';
-
+import Redirect from '../../components/Redirect';
 import actions from '../../store/actions/auth';
 
 import styles from './Logout.css';
@@ -11,7 +11,8 @@ class Logout extends Component {
     this.props.logoutUser();
   }
   render({ isAuth }) {
-    isAuth || route('/');
+    if(isAuth)
+      return <Redirect to="/" />
     return (
       <div class={`container ${styles.pad_top}`}>
         <div class="row">
