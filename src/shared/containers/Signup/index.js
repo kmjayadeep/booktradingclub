@@ -3,6 +3,7 @@ import {connect} from 'unistore/preact';
 import actions from '../../store/actions/auth';
 import styles from  '../Login/Login.css';
 import Redirect from '../../components/Redirect';
+import { route } from 'preact-router';
 
 class Signup extends Component {
 
@@ -48,7 +49,7 @@ class Signup extends Component {
     if (!this.validateFields(fields)) return;
     try {
       await this.props.signupUser(fields);
-      this.setState({ signupSuccess: true });
+      route('/login',true);
     } catch (err) {
       if(err && err.message)
         this.setErrorMessage(err.message);
@@ -57,8 +58,8 @@ class Signup extends Component {
     }
   };
 
-  render({ isAuth },{ signupError, signupSuccess }) {
-    if(isAuth || signupSuccess)
+  render({ isAuth },{ signupError }) {
+    if(isAuth)
       return <Redirect to="/login" />
     return (
       <div class="container">
