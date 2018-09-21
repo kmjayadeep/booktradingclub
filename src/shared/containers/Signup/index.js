@@ -1,10 +1,8 @@
 import {h, Component } from 'preact';
-
-
-import { signupUser } from '../../redux/actions/auth';
-import timerPromise from '../../utils/timerPromise';
-
+import {connect} from 'unistore/preact';
+import actions from '../../store/actions/auth';
 import styles from  '../Login/Login.css';
+import Redirect from '../../components/Redirect';
 
 class Signup extends Component {
 
@@ -49,17 +47,19 @@ class Signup extends Component {
     };
     if (!this.validateFields(fields)) return;
     try {
-      await signupUser(fields);
+      await this.props.signupUser(fields);
       this.setState({ signupSuccess: true });
-      await timerPromise(3000);
-      this.setState({ redirectLogin: true });
     } catch (err) {
-      this.setErrorMessage(err.message);
+      if(err && err.message)
+        this.setErrorMessage(err.message);
+      else
+        this.setErrorMessage("Unable to sign up");
     }
   };
 
-  render({},{signupError}) {
-    const signupMessage = 'Signup Successful. You will be redirected to Login'
+  render({ isAuth },{ signupError, signupSuccess }) {
+    if(isAuth || signupSuccess)
+      return <Redirect to="/login" />
     return (
       <div class="container">
         <div class="card" id={styles.auth_card}>
@@ -69,15 +69,15 @@ class Signup extends Component {
             <div class="card-subtitle">To access thousands of books around you</div>
             <AlertMessage
               className="mt-4"
-              type="dark"
-              message={this.state.signupSuccess ? signupMessage : ''}
+              type="warning"
+              message={signupError}
             />
             <form id={styles.auth_form}>
               <input class="form-control" name="name" id="inputName" placeholder="Name" required onChange={this.handleChange} />
               <input class="form-control" type="email" name="email" id="inputEmail" placeholder="Email Address" required onChange={this.handleChange} />
               <input class="form-control" type="password" name="password" id="inputPassword" placeholder="Password" required onChange={this.handleChange}/>
               <input class="form-control" type="password" name="confirmPassword" id="inputConfirmPassword" placeholder="Confirm Password" required onChange={this.handleChange} />
-              <button class="btn btn-primary btn-block" onClick={this.handleSignup}>Sign In</button>
+              <button class="btn btn-primary btn-block" onClick={this.handleSignup}>Sign Up</button>
             </form>
           </div>
         </div>
@@ -86,11 +86,15 @@ class Signup extends Component {
   }
 }
 
-const AlertMessage = ({ message, type, className }) => (
-  message &&
-  <Alert color={type ? type : 'warning'} className={className}>
-    {message}
-  </Alert>
-);
+const AlertMessage = ({ message, className , type}) => {
+  type = type || 'warning'
+  let classNames = `alert alert-${type} ${className}`;
+  return (
+    message &&
+    <div class={classNames}>
+      {message}
+    </div>
+  )
+};
 
-export default Signup;
+export default connect('isAuth', actions)(Signup);

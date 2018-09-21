@@ -15,10 +15,8 @@ export async function loginUser(state, credentials) {
 }
 
 //TODO
-export function signupUser(userData) {
-  return async dispatch => {
-    await signup(userData);
-  };
+export async function signupUser(state, userData) {
+  await signup(userData);
 }
 
 export async function logoutUser() {
@@ -31,5 +29,6 @@ export async function logoutUser() {
 
 export default store => ({
   loginUser,
-  logoutUser
+  logoutUser,
+  signupUser
 })
