@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import configureStore from './store';
 import Routes from './routes';
 import config from './config';
-import { renderFullHtml } from './render';
+import { renderFullHtml, renderEarlyChunk, renderLateChunk } from './render';
 import { validateAuthHeaders } from './middlewares/auth';
 import { getAllActiveBooks } from './controllers/BookController';
 
@@ -40,13 +40,18 @@ app.use(validateAuthHeaders);
 app.use('/api', Routes);
 
 app.get('/', async (req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+  res.setHeader('Transfer-Encoding', 'chunked');
+  let earlyChunk = renderEarlyChunk();
+  res.write(earlyChunk);
   const store = await configureStore(req);
   store.setState({
     activeBooks: {
       data: await getAllActiveBooks()
     }
   })
-  res.send(renderFullHtml(req.originalUrl, store));
+  res.write(renderLateChunk(req.originalUrl, store));
+  res.end();
 });
 
 app.get('/login|signup', async (req,res)=>{

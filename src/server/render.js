@@ -13,6 +13,33 @@ function renderMarkup(url, store) {
   return html;
 }
 
+export function renderEarlyChunk(){
+  return `
+    <html>
+        <head>
+            <title>BookSharingApp</title>
+            <link rel="stylesheet" href="/style.css"/>
+            <link rel="preload" href="/bundle.js" as="script">
+        </head>
+        <body>
+  `
+}
+
+export function renderLateChunk(url, store){
+  const markup = renderMarkup(url, store);
+  const preloadedState = store.getState();
+  const serializedState = serialize(preloadedState);
+  return `
+            <div id="app-root">${markup}</div>
+            <script>
+              window.__PRELOADED_STATE__ = ${serializedState}
+            </script>
+            <script src="/bundle.js"></script>
+        </body>
+    </html>
+  `;
+}
+
 export function renderFullHtml(url, store) {
   const markup = renderMarkup(url, store);
   const preloadedState = store.getState();
