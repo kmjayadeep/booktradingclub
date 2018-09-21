@@ -48,7 +48,6 @@ export const signupBasic = async body => {
     const { name, email } = await user.save();
     return { name, email };
   } catch (err) {
-    throw err
-    // throw moongooseErrorFormatter(err);
+    throw moongooseErrorFormatter(err);
   }
 };
