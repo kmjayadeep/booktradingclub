@@ -13,8 +13,10 @@ function renderMarkup(url, store) {
   return html;
 }
 
-export function renderEarlyChunk(){
-  return `
+export function renderEarlyChunk(req, res, next){
+  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+  res.setHeader('Transfer-Encoding', 'chunked');
+  res.write(`
     <html>
         <head>
             <title>BookSharingApp</title>
@@ -22,14 +24,16 @@ export function renderEarlyChunk(){
             <link rel="preload" href="/bundle.js" as="script">
         </head>
         <body>
-  `
+  `);
+  next();
 }
 
-export function renderLateChunk(url, store){
+export function renderLateChunk(req, res, store){
+  const url = req.originalUrl;
   const markup = renderMarkup(url, store);
   const preloadedState = store.getState();
   const serializedState = serialize(preloadedState);
-  return `
+  const lateChunk = `
             <div id="app-root">${markup}</div>
             <script>
               window.__PRELOADED_STATE__ = ${serializedState}
@@ -38,6 +42,8 @@ export function renderLateChunk(url, store){
         </body>
     </html>
   `;
+  res.write(lateChunk);
+  res.end();
 }
 
 export function renderFullHtml(url, store) {
