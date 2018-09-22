@@ -2,12 +2,12 @@ import { h } from 'preact';
 import serialize from 'serialize-javascript';
 import { Provider } from 'unistore/preact';
 import { render } from 'preact-render-to-string';
-import Router from '../shared/router';
+import App from '../shared/App';
 
 function renderMarkup(url, store) {
   let html = render(
     <Provider store={store}>
-      <Router url={url}/>
+      <App url={url}/>
     </Provider>
   )
   return html;

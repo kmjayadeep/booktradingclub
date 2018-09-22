@@ -2,7 +2,6 @@ import { h } from 'preact'
 import Router from 'preact-router'
 
 import Topbar from './components/Topbar'
-import './App.css';
 
 import Home from './containers/Home';
 import Login from './containers/Login';
