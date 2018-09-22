@@ -1,11 +1,11 @@
-#auth_card {
+#auth-card {
     max-width: 350px;
     padding: 20px 25px 30px;
     margin: 50px auto 25px;
     text-align: center;
 }
 
-#auth_card img {
+#auth-card img {
     width: 96px;
     height: 96px;
     margin: 0 auto;
@@ -13,20 +13,20 @@
     border-radius: 50%;
 }
 
-#auth_card .card-title {
+#auth-card .card-title {
     font-size: 25px;
 }
 
-#auth_card .card-subtitle {
+#auth-card .card-subtitle {
     font-weight: normal;
 }
 
-#auth_form {
+#auth-form {
     padding-top: 20px;
     margin: 0;
 }
 
-#auth_form input {
+#auth-form input {
     padding: 10px;
     margin-bottom: 10px;
 }

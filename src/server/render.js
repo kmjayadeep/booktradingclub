@@ -20,7 +20,7 @@ export function renderEarlyChunk(req, res){
     <html>
         <head>
             <title>BookSharingApp</title>
-            <link rel="stylesheet" href="/style.css"/>
+            <link rel="stylesheet" href="/main.css"/>
             <link rel="preload" href="/bundle.js" as="script">
         </head>
         <body>
@@ -53,7 +53,7 @@ export function renderFullHtml(url, store) {
     <html>
         <head>
             <title>BookSharingApp</title>
-            <link rel="stylesheet" href="/style.css"/>
+            <link rel="stylesheet" href="/main.css"/>
         </head>
         <body>
             <div id="app-root">${markup}</div>

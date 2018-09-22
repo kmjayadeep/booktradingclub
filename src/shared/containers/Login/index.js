@@ -4,9 +4,7 @@ import { route } from 'preact-router';
 import actions from '../../store/actions/auth';
 import Redirect from '../../components/Redirect';
 
-
-import styles from  "./Login.css";
-
+import './Login.css';
 class Login extends Component {
 
   state = {
@@ -44,12 +42,12 @@ class Login extends Component {
       return <Redirect to="/"/>; //redirect if already logged
     return (
       <div class="container">
-        <div class="card" id={styles.auth_card}>
+        <div class="card" id="auth-card">
           <img class="card-img-top" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
           <div class="card-body">
             <h5 class="card-title">Login</h5>
             <div class="card-subtitle">To access thousands of books around you</div>
-            <form id={styles.auth_form}>
+            <form id="auth-form">
                <WarningMessage message={loginError} />
                <div class="form-group">
                <input class="form-control" type="email" name="email"  placeholder="Email Address" required onChange={this.handleChange} />

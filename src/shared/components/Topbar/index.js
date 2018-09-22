@@ -2,8 +2,7 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router'
 import { connect } from 'unistore/preact';
 
-import styles from './Topbar.css';
-
+import './Topbar.css';
 class Topbar extends Component{
   state = {
     isOpen: false,
@@ -24,7 +23,7 @@ class Topbar extends Component{
     const showDropdown = dropdown ? 'show' : ''
     return (
       <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary">
-        <div class={`navbar-collapse collapse order-1 order-md-0 dual-collapse2 ${showClass} ${styles.flex_1}`}>
+        <div class={`navbar-collapse collapse order-1 order-md-0 dual-collapse2 ${showClass} flex_1`}>
           <ul class="navbar-nav align-items-center">
             <li class="nav-item">
               <Link class="nav-link" href="/allbooks">All Books</Link>
@@ -38,9 +37,9 @@ class Topbar extends Component{
           <button class="navbar-toggler" type="button" onClick={this.toggle}>
             <span class="navbar-toggler-icon"></span>
           </button>
-          <Link class={`navbar-brand ${styles.booksharing_brand}`} href="/">BookSharingApp</Link>
+          <Link class={`navbar-brand booksharing_brand`} href="/">BookSharingApp</Link>
         </div>
-        <div class={`navbar-collapse collapse order-2 dual-collapse2 ${showClass} ${styles.flex_1}`}>
+        <div class={`navbar-collapse collapse order-2 dual-collapse2 ${showClass} flex_1`}>
           {auth.isAuth ?
             <ul class="navbar-nav justify-content-end align-items-center w-100">
               <li class="nav-item">

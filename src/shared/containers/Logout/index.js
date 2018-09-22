@@ -1,11 +1,9 @@
 import { h, Component } from 'preact';
 import { connect } from 'unistore/preact';
-import { route } from 'preact-router';
 import Redirect from '../../components/Redirect';
 import actions from '../../store/actions/auth';
 
-import styles from './Logout.css';
-
+import './Logout.css'
 class Logout extends Component {
   componentDidMount() {
     this.props.logoutUser();
@@ -14,7 +12,7 @@ class Logout extends Component {
     if(auth.isAuth)
       return <Redirect to="/" />
     return (
-      <div class={`container ${styles.pad_top}`}>
+      <div class="container pad-top">
         <div class="row">
           <div class="col text-center">
             <h3>Logging out</h3>
