@@ -13,7 +13,7 @@ function renderMarkup(url, store) {
   return html;
 }
 
-export function renderEarlyChunk(req, res, next){
+export function renderEarlyChunk(req, res){
   res.setHeader('Content-Type', 'text/html; charset=UTF-8');
   res.setHeader('Transfer-Encoding', 'chunked');
   res.write(`
@@ -25,7 +25,6 @@ export function renderEarlyChunk(req, res, next){
         </head>
         <body>
   `);
-  next();
 }
 
 export function renderLateChunk(req, res, store){
