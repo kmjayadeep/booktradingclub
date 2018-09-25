@@ -2,10 +2,8 @@
 
 A Simple web application to share your books with other readers.
 
-[![dependencies Status](https://david-dm.org/michaelBenin/react-ssr-spa/status.svg)](https://david-dm.org/kmjayadeep/booksharingapp) [![devDependencies Status](https://david-dm.org/kmjayadeep/booksharingapp/dev-status.svg)](https://david-dm.org/michaelBenin/react-ssr-spa?type=dev) 
-[![NSP Status](https://nodesecurity.io/orgs/kmjayadeep/projects/9cd81d33-4d6f-4a30-83d4-533064e1212c/badge)](https://nodesecurity.io/orgs/kmjayadeep/projects/9cd81d33-4d6f-4a30-83d4-533064e1212c)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
+[![dependencies Status](https://david-dm.org/kmjayadeep/booktradingclub/status.svg)](https://david-dm.org/kmjayadeep/booktradingclub)
+[![devDependencies Status](https://david-dm.org/kmjayadeep/booktradingclub/dev-status.svg)](https://david-dm.org/kmjayadeep/booktradingclub?type=dev) 
 
 
 ## Development Guide
