@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && node bootstrap.js",
-    "dev": "NODE_ENV=development webpack -w --mode development & NODE_ENV=development nodemon bootstrap.js",
-    "server": "NODE_ENV=development node bootstrap.js",
-    "webpack": "NODE_ENV=development webpack -w --mode development",
+    "start": "webpack && node server.js",
+    "dev": "NODE_ENV=development webpack -w --mode development & NODE_ENV=development nodemon server.js",
+    "dev-server": "NODE_ENV=development nodemon server.js",
+    "dev-webpack": "NODE_ENV=development webpack -w --mode development",
+    "server": "node server.js",
+    "webpack": "webpack",
     "test": "mocha --require babel-core/register --require babel-polyfill src/server/tests/**/*.spec.js"
   },
   "keywords": [],
