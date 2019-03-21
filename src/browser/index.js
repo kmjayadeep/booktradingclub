@@ -1,9 +1,16 @@
 import { h, render } from 'preact'
 import { Provider } from 'unistore/preact'
-import App from '../shared/App'
-import { configureStore } from '../shared/store/store';
+import App from './App'
+import { configureStore } from './store/store';
 
-const store = configureStore(window.__PRELOADED_STATE__);
+const store = configureStore({
+    auth: {
+        loggedIn: true
+    },
+    activeBooks: {
+        data:  []
+    }
+});
 
 const app = document.getElementById('app-root')
 

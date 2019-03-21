@@ -42,15 +42,5 @@ module.exports = [{
         path: __dirname,
         filename: "server.js"
     },
-    externals: [nodeExternals()],
-    module: {
-        rules: [{
-            test: /\.js$/,
-            loader: "babel-loader",
-            exclude: /node_modules/
-        }, {
-            test: /\.css$/,
-            loader: 'ignore-loader'
-        }]
-    }
+    externals: [nodeExternals()]
 }];

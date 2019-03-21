@@ -1,54 +1,4 @@
-import { h } from 'preact';
-import serialize from 'serialize-javascript';
-import { Provider } from 'unistore/preact';
-import { render } from 'preact-render-to-string';
-import App from '../shared/App';
-
-function renderMarkup(url, store) {
-  let html = render(
-    <Provider store={store}>
-      <App url={url}/>
-    </Provider>
-  )
-  return html;
-}
-
-export function renderEarlyChunk(req, res){
-  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-  res.setHeader('Transfer-Encoding', 'chunked');
-  res.write(`
-    <html>
-        <head>
-            <title>BookSharingApp</title>
-            <link rel="stylesheet" href="/main.css"/>
-            <link rel="preload" href="/bundle.js" as="script">
-        </head>
-        <body>
-  `);
-}
-
-export function renderLateChunk(req, res, store){
-  const url = req.originalUrl;
-  const markup = renderMarkup(url, store);
-  const preloadedState = store.getState();
-  const serializedState = serialize(preloadedState);
-  const lateChunk = `
-            <div id="app-root">${markup}</div>
-            <script>
-              window.__PRELOADED_STATE__ = ${serializedState}
-            </script>
-            <script src="/bundle.js"></script>
-        </body>
-    </html>
-  `;
-  res.write(lateChunk);
-  res.end();
-}
-
-export function renderFullHtml(url, store) {
-  const markup = renderMarkup(url, store);
-  const preloadedState = store.getState();
-  const serializedState = serialize(preloadedState);
+export function renderFullHtml() {
   return `
     <html>
         <head>
@@ -56,10 +6,7 @@ export function renderFullHtml(url, store) {
             <link rel="stylesheet" href="/main.css"/>
         </head>
         <body>
-            <div id="app-root">${markup}</div>
-            <script>
-              window.__PRELOADED_STATE__ = ${serializedState}
-            </script>
+            <div id="app-root"></div>
             <script src="/bundle.js"></script>
         </body>
     </html>
